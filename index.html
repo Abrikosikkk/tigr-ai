@@ -226,7 +226,7 @@
 </div>
 <button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
 <span class="material-symbols-outlined">login</span> SIGN IN
-                    </button>
+                        </button>
 </form>
 <div class="relative my-stack-lg flex items-center">
 <div class="flex-grow border-t border-white/10"></div>
@@ -235,10 +235,10 @@
 </div>
 <button class="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 py-3 rounded-lg font-label-md hover:bg-white/10 transition-colors" id="google-signin">
 <svg class="w-5 h-5" viewbox="0 0 24 24"><path d="M12 5.04c1.64 0 3.12.56 4.28 1.67l3.2-3.2C17.52 1.64 14.97 1 12 1 7.73 1 4.12 3.44 2.37 7.02l3.77 2.92C7.02 7.04 9.3 5.04 12 5.04z" fill="#EA4335"></path><path d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-1.99 3.41-4.91 3.41-8.7z" fill="#4285F4"></path><path d="M5.93 14.9c-.24-.72-.37-1.5-.37-2.3s.13-1.58.37-2.3L2.16 7.38C1.4 8.78 1 10.34 1 12c0 1.66.4 3.22 1.16 4.62l3.77-2.72z" fill="#FBBC05"></path><path d="M12 23c2.97 0 5.48-.98 7.31-2.67l-3.71-2.88c-1.01.67-2.31 1.07-3.6 1.07-2.7 0-4.98-2-5.81-4.69l-3.77 2.92C4.12 20.56 7.73 23 12 23z" fill="#34A853"></path></svg>
-                    Google Authorization
-                </button>
+                        Google Authorization
+                    </button>
 <p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-                    New to the network? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('signup')">Register Identity</button>
+                        New to the network? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('signup')">Register Identity</button>
 </p>
 </section>
 <section class="hidden-view" id="signup-section">
@@ -270,10 +270,10 @@
 </div>
 <button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
 <span class="material-symbols-outlined">how_to_reg</span> SIGN UP
-                    </button>
+                        </button>
 </form>
 <p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-                    Already registered? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('login')">Access Core</button>
+                        Already registered? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('login')">Access Core</button>
 </p>
 </section>
 </div>
@@ -299,7 +299,7 @@
 </div>
 <button class="w-full bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform" id="new-chat-btn">
 <span class="material-symbols-outlined">add_circle</span> New Chat
-            </button>
+                </button>
 </div>
 <nav class="flex-1 px-2 overflow-y-auto custom-scrollbar" id="chat-history-list">
 <p class="px-4 py-2 text-label-sm uppercase opacity-40 font-bold tracking-widest">Recent Chats</p>
@@ -308,7 +308,7 @@
 <div class="px-4 mt-auto space-y-2 pt-6 border-t border-white/5">
 <button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 font-label-md transition-colors" onclick="toggleSettingsModal()">
 <span class="material-symbols-outlined">settings</span> Settings
-            </button>
+                </button>
 <div class="flex items-center gap-4 px-2 py-2">
 <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold uppercase" id="user-avatar">?</div>
 <div class="overflow-hidden">
@@ -318,7 +318,7 @@
 </div>
 <button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-3 font-label-md transition-colors" id="sign-out-btn">
 <span class="material-symbols-outlined">logout</span> Sign Out
-            </button>
+                </button>
 </div>
 </aside>
 <!-- Overlay -->
@@ -419,18 +419,18 @@
 </div>
 <!-- Firebase and App Logic -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getDatabase, ref, set, push, onValue, serverTimestamp, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, serverTimestamp, off, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const HF_MODELS_CONFIG = [
-        { id: "obsidian-apex-v1", name: "Obsidian Apex", desc: "Balanced performance & logic" },
-        { id: "mistral-7b-instruct", name: "Mistral 7B", desc: "Instruction tuned model" },
-        { id: "llama-3-8b", name: "Llama 3 8B", desc: "Meta's latest efficient model" },
-        { id: "phi-3-mini", name: "Phi-3 Mini", desc: "Microsoft's compact powerhouse" }
-    ];
+        const HF_MODELS_CONFIG = [
+            { id: "obsidian-apex-v1", name: "Obsidian Apex", desc: "Balanced performance & logic" },
+            { id: "mistral-7b-instruct", name: "Mistral 7B", desc: "Instruction tuned model" },
+            { id: "llama-3-8b", name: "Llama 3 8B", desc: "Meta's latest efficient model" },
+            { id: "phi-3-mini", name: "Phi-3 Mini", desc: "Microsoft's compact powerhouse" }
+        ];
 
-    const firebaseConfig = {
+        const firebaseConfig = {
   apiKey: "AIzaSyANPnto5M6Y9GBLX3akAbQ3UX4CAiVI3c8",
   authDomain: "tigrai.firebaseapp.com",
   databaseURL: "https://tigrai-default-rtdb.europe-west1.firebasedatabase.app",
@@ -441,452 +441,403 @@
   measurementId: "G-ZXB03SSX9S"
 };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getDatabase(app);
-    const googleProvider = new GoogleAuthProvider();
 
-    let currentUserId = null;
-    let currentChatId = null;
-    let currentModel = HF_MODELS_CONFIG[0];
-    let attachedFiles = [];
-    let activeChatListener = null;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const googleProvider = new GoogleAuthProvider();
 
-    // --- VIEW MANAGEMENT ---
-    function switchView(view) {
-        const authView = document.getElementById('auth-view');
-        const chatView = document.getElementById('chat-view');
-        if (view === 'chat') {
-            authView.classList.replace('active-view', 'hidden-view');
-            chatView.classList.replace('hidden-view', 'active-view');
-        } else {
-            chatView.classList.replace('active-view', 'hidden-view');
-            authView.classList.replace('hidden-view', 'active-view');
+        let currentUserId = null;
+        let currentChatId = null;
+        let currentModel = HF_MODELS_CONFIG[0];
+        let attachedFiles = [];
+        let activeChatListener = null;
+        let localMessages = []; // Session persistence
+
+        // --- VIEW MANAGEMENT ---
+        function switchView(view) {
+            const authView = document.getElementById('auth-view');
+            const chatView = document.getElementById('chat-view');
+            if (view === 'chat') {
+                authView.classList.replace('active-view', 'hidden-view');
+                chatView.classList.replace('hidden-view', 'active-view');
+            } else {
+                chatView.classList.replace('active-view', 'hidden-view');
+                authView.classList.replace('hidden-view', 'active-view');
+            }
         }
-    }
 
-    window.toggleAuthForms = (view) => {
-        const login = document.getElementById('login-section');
-        const signup = document.getElementById('signup-section');
-        if (view === 'signup') {
-            login.classList.add('hidden-view');
-            signup.classList.remove('hidden-view');
-        } else {
-            signup.classList.add('hidden-view');
-            login.classList.remove('hidden-view');
-        }
-    };
+        window.toggleAuthForms = (view) => {
+            const login = document.getElementById('login-section');
+            const signup = document.getElementById('signup-section');
+            if (view === 'signup') {
+                login.classList.add('hidden-view');
+                signup.classList.remove('hidden-view');
+            } else {
+                signup.classList.remove('hidden-view');
+                login.classList.remove('hidden-view');
+            }
+        };
 
-    // --- SETTINGS & THEME ---
-    window.toggleSettingsModal = () => {
-        const modal = document.getElementById('settings-modal');
-        if (modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        } else {
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-    };
+        // --- SETTINGS & THEME ---
+        window.toggleSettingsModal = () => {
+            const modal = document.getElementById('settings-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            } else {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        };
 
-    const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        if (html.classList.contains('dark')) {
-            html.classList.remove('dark');
-            html.classList.add('light');
-            localStorage.setItem('theme', 'light');
-        } else {
-            html.classList.remove('light');
-            html.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
-
-    if (localStorage.getItem('theme') === 'light') {
-        document.documentElement.classList.replace('dark', 'light');
-    }
-
-    // --- AUTH LISTENERS ---
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            currentUserId = user.uid;
-            document.getElementById('user-display-name').textContent = user.displayName || user.email;
-            document.getElementById('user-avatar').textContent = (user.displayName || user.email).charAt(0).toUpperCase();
-            switchView('chat');
-            loadChatHistory();
-            if (!currentChatId) startNewChat();
-        } else {
-            currentUserId = null;
-            switchView('auth');
-        }
-    });
-
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-password').value;
-        try { await signInWithEmailAndPassword(auth, email, pass); } catch (err) { alert(err.message); }
-    });
-
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('signup-name').value;
-        const email = document.getElementById('signup-email').value;
-        const pass = document.getElementById('signup-password').value;
-        try {
-            const cred = await createUserWithEmailAndPassword(auth, email, pass);
-            await updateProfile(cred.user, { displayName: name });
-        } catch (err) { alert(err.message); }
-    });
-
-    document.getElementById('google-signin').onclick = async () => {
-        try { await signInWithPopup(auth, googleProvider); } catch (err) { alert(err.message); }
-    };
-
-    document.getElementById('sign-out-btn').onclick = () => signOut(auth);
-
-    // --- MODEL SWITCHER ---
-    function initModelSwitcher() {
-        const container = document.getElementById('model-list-container');
-        container.innerHTML = '';
-        HF_MODELS_CONFIG.forEach(model => {
-            const btn = document.createElement('button');
-            btn.className = "w-full text-left px-4 py-3 hover:bg-white/5 flex flex-col transition-colors group";
-            btn.onclick = () => {
-                currentModel = model;
-                document.getElementById('current-model-display').textContent = model.name;
-                document.getElementById('model-dropdown').blur();
-            };
-            btn.innerHTML = `
-                <span class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">${model.name}</span>
-                <span class="text-[9px] text-on-surface-variant opacity-60">${model.desc}</span>
-            `;
-            container.appendChild(btn);
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
         });
-        document.getElementById('current-model-display').textContent = currentModel.name;
-    }
-    initModelSwitcher();
 
-    // --- FILE HANDLING ---
-    const attachBtn = document.getElementById('attach-btn');
-    const fileInput = document.getElementById('file-input');
-    const filePreviewContainer = document.getElementById('file-preview-container');
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.replace('dark', 'light');
+        }
 
-    attachBtn.onclick = () => fileInput.click();
-
-    fileInput.onchange = (e) => {
-        const files = Array.from(e.target.files || []);
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const base64 = event.target.result;
-                const fileObj = { name: file.name, type: file.type, data: base64 };
-                attachedFiles.push(fileObj);
-                renderFilePreviews();
-            };
-            reader.readAsDataURL(file);
+        // --- AUTH LISTENERS ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                document.getElementById('user-display-name').textContent = user.displayName || user.email;
+                document.getElementById('user-avatar').textContent = (user.displayName || user.email).charAt(0).toUpperCase();
+                switchView('chat');
+                loadChatHistory();
+                if (!currentChatId) startNewChat();
+            } else {
+                currentUserId = null;
+                switchView('auth');
+            }
         });
-        fileInput.value = '';
-    };
 
-    function renderFilePreviews() {
-        filePreviewContainer.innerHTML = '';
-        if (attachedFiles.length > 0) {
-            filePreviewContainer.classList.remove('hidden');
-            attachedFiles.forEach((file, index) => {
-                const div = document.createElement('div');
-                div.className = "flex items-center gap-2 glass bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-[10px] animate-in fade-in zoom-in duration-200";
-                div.innerHTML = `
-                    <span class="material-symbols-outlined text-sm">description</span>
-                    <span class="truncate max-w-[100px] font-mono">${file.name}</span>
-                    <button class="hover:text-primary text-on-surface-variant transition-colors" onclick="removeFile(${index})">
-                        <span class="material-symbols-outlined text-[14px]">close</span>
-                    </button>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (err) { alert(err.message); }
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const pass = document.getElementById('signup-password').value;
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await updateProfile(cred.user, { displayName: name });
+            } catch (err) { alert(err.message); }
+        });
+
+        document.getElementById('google-signin').onclick = async () => {
+            try { await signInWithPopup(auth, googleProvider); } catch (err) { alert(err.message); }
+        };
+
+        document.getElementById('sign-out-btn').onclick = () => signOut(auth);
+
+        // --- MODEL SWITCHER ---
+        function initModelSwitcher() {
+            const container = document.getElementById('model-list-container');
+            container.innerHTML = '';
+            HF_MODELS_CONFIG.forEach(model => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left px-4 py-3 hover:bg-white/5 flex flex-col transition-colors group";
+                btn.onclick = () => {
+                    currentModel = model;
+                    document.getElementById('current-model-display').textContent = model.name;
+                    document.getElementById('model-dropdown').blur();
+                };
+                btn.innerHTML = `
+                    <span class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">${model.name}</span>
+                    <span class="text-[9px] text-on-surface-variant opacity-60">${model.desc}</span>
                 `;
-                filePreviewContainer.appendChild(div);
+                container.appendChild(btn);
             });
-        } else {
-            filePreviewContainer.classList.add('hidden');
+            document.getElementById('current-model-display').textContent = currentModel.name;
         }
-    }
+        initModelSwitcher();
 
-    window.removeFile = (index) => {
-        attachedFiles.splice(index, 1);
-        renderFilePreviews();
-    };
+        // --- FILE HANDLING ---
+        const attachBtn = document.getElementById('attach-btn');
+        const fileInput = document.getElementById('file-input');
+        const filePreviewContainer = document.getElementById('file-preview-container');
 
-    // --- CHAT LOGIC ---
-const messageInput = document.getElementById('message-input');
-const sendBtn = document.getElementById('send-btn');
-const messagesContainer = document.getElementById('messages-container');
-const welcomeState = document.getElementById('welcome-state');
+        attachBtn.onclick = () => fileInput.click();
 
-function startNewChat() {
-    if (activeChatListener) {
-        off(ref(db, activeChatListener));
-        activeChatListener = null;
-    }
-    currentChatId = 'chat_' + Date.now();
-    messagesContainer.innerHTML = '';
-    // Создаем welcome state заново, чтобы избежать проблем с ссылками
-    const newWelcome = document.createElement('div');
-    newWelcome.id = 'welcome-state';
-    newWelcome.className = 'py-12 text-center space-y-6';
-    newWelcome.innerHTML = `
-        <img alt="Tigr Logo" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
-        <h2 class="font-headline-lg text-on-surface opacity-90">How can I assist your workflow today?</h2>
-        <div class="flex flex-wrap justify-center gap-2">
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Analyze toxicity in text</button>
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Review model metrics</button>
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Generate summary report</button>
-        </div>
-    `;
-    messagesContainer.appendChild(newWelcome);
-    
-    attachedFiles = [];
-    renderFilePreviews();
-    listenToChat(currentChatId);
-}
-
-document.getElementById('new-chat-btn').onclick = startNewChat;
-
-async function sendMessage() {
-    const text = messageInput.value.trim();
-    if ((!text && attachedFiles.length === 0) || !currentUserId) return;
-
-    // Проверяем, что currentChatId существует, если нет - создаем новый
-    if (!currentChatId) {
-        startNewChat();
-    }
-
-    const chatId = currentChatId;
-    const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
-    const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
-    
-    const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
-
-    const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
-    
-    await set(chatRef, { 
-        lastMessage: text || "Sent an attachment", 
-        timestamp: serverTimestamp(), 
-        title: chatTitle
-    });
-
-    await push(messagesRef, {
-        sender: 'user',
-        text: text,
-        attachments: attachmentsData,
-        timestamp: serverTimestamp(),
-        model: currentModel.id
-    });
-
-    messageInput.value = '';
-    messageInput.style.height = 'auto';
-    attachedFiles = [];
-    renderFilePreviews();
-
-    // Отправляем ответ AI с задержкой
-    setTimeout(async () => {
-        const aiMsgRef = push(messagesRef);
-        await set(aiMsgRef, {
-            sender: 'ai',
-            text: `Core Response [${currentModel.name}]: I've processed your input. ${attachmentsData.length > 0 ? `I've analyzed the ${attachmentsData.length} file(s) you shared.` : 'Continuing our thread.'}`,
-            timestamp: serverTimestamp()
-        });
-    }, 800);
-}
-
-sendBtn.onclick = sendMessage;
-messageInput.addEventListener('keydown', (e) => { 
-    if(e.key === 'Enter' && !e.shiftKey) { 
-        e.preventDefault(); 
-        sendMessage(); 
-    } 
-});
-
-document.querySelectorAll('.sample-prompt').forEach(btn => {
-    btn.onclick = () => {
-        messageInput.value = btn.textContent;
-        messageInput.style.height = 'auto';
-        messageInput.style.height = messageInput.scrollHeight + 'px';
-    };
-});
-
-function listenToChat(chatId) {
-    // Отключаем предыдущий слушатель
-    if (activeChatListener) {
-        off(ref(db, activeChatListener));
-        activeChatListener = null;
-    }
-    
-    const path = `users/${currentUserId}/chats/${chatId}/messages`;
-    activeChatListener = path;
-    const messagesRef = ref(db, path);
-    
-    onValue(messagesRef, (snapshot) => {
-        // Проверяем, что это тот же чат
-        if (chatId !== currentChatId) return;
-        
-        // Очищаем контейнер только если у нас есть сообщения
-        const fragment = document.createDocumentFragment();
-        let hasMessages = false;
-        
-        if (snapshot.exists()) {
-            // Скрываем welcome state
-            const welcome = document.getElementById('welcome-state');
-            if (welcome) welcome.style.display = 'none';
-            
-            // Собираем все сообщения в фрагмент
-            const messages = [];
-            snapshot.forEach((child) => {
-                messages.push({ id: child.key, ...child.val() });
+        fileInput.onchange = (e) => {
+            const files = Array.from(e.target.files || []);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const base64 = event.target.result;
+                    const fileObj = { name: file.name, type: file.type, data: base64 };
+                    attachedFiles.push(fileObj);
+                    renderFilePreviews();
+                };
+                reader.readAsDataURL(file);
             });
-            
-            // Сортируем по времени
-            messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-            
-            // Очищаем контейнер и добавляем все сообщения
+            fileInput.value = '';
+        };
+
+        function renderFilePreviews() {
+            filePreviewContainer.innerHTML = '';
+            if (attachedFiles.length > 0) {
+                filePreviewContainer.classList.remove('hidden');
+                attachedFiles.forEach((file, index) => {
+                    const div = document.createElement('div');
+                    div.className = "flex items-center gap-2 glass bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-[10px] animate-in fade-in zoom-in duration-200";
+                    div.innerHTML = `
+                        <span class="material-symbols-outlined text-sm">description</span>
+                        <span class="truncate max-w-[100px] font-mono">${file.name}</span>
+                        <button class="hover:text-primary text-on-surface-variant transition-colors" onclick="removeFile(${index})">
+                            <span class="material-symbols-outlined text-[14px]">close</span>
+                        </button>
+                    `;
+                    filePreviewContainer.appendChild(div);
+                });
+            } else {
+                filePreviewContainer.classList.add('hidden');
+            }
+        }
+
+        window.removeFile = (index) => {
+            attachedFiles.splice(index, 1);
+            renderFilePreviews();
+        };
+
+        // --- CHAT LOGIC ---
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const messagesContainer = document.getElementById('messages-container');
+        const welcomeState = document.getElementById('welcome-state');
+
+        function startNewChat() {
+            if (activeChatListener) {
+                off(ref(db, activeChatListener));
+            }
+            currentChatId = 'chat_' + Date.now();
             messagesContainer.innerHTML = '';
+            messagesContainer.appendChild(welcomeState);
+            welcomeState.style.display = 'block';
+            attachedFiles = [];
+            localMessages = [];
+            renderFilePreviews();
+            listenToChat(currentChatId);
+        }
+
+        document.getElementById('new-chat-btn').onclick = startNewChat;
+
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if ((!text && attachedFiles.length === 0) || !currentUserId) return;
+
+            const chatId = currentChatId;
+            const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
+            const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
             
-            messages.forEach(msg => {
-                appendMessageUI(msg, fragment);
+            const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
+            const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
+            
+            // UI Feedback: Immediately hide welcome
+            welcomeState.style.display = 'none';
+
+            // 1. Update Chat Meta (using set for meta is fine, but push for messages)
+            await set(chatRef, { 
+                lastMessage: text || "Sent an attachment", 
+                timestamp: serverTimestamp(), 
+                title: chatTitle
             });
-            
-            hasMessages = true;
-        } else {
-            // Если сообщений нет, показываем welcome state
-            const welcome = document.getElementById('welcome-state');
-            if (welcome) {
-                messagesContainer.innerHTML = '';
-                messagesContainer.appendChild(welcome);
-                welcome.style.display = 'block';
-            }
-        }
-        
-        if (hasMessages && fragment.childNodes.length > 0) {
-            messagesContainer.appendChild(fragment);
-        }
-        
-        // Прокручиваем вниз
-        messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-    });
-}
 
-function appendMessageUI(msg, targetContainer = null) {
-    const isUser = msg.sender === 'user';
-    const wrapper = document.createElement('div');
-    wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
-    
-    const inner = document.createElement('div');
-    inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
-    
-    if (!isUser) {
-        inner.innerHTML = `
-            <div class="flex items-center gap-2 mb-2">
-                <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
-            </div>
-        `;
-    }
-    
-    if (msg.text) {
-        const p = document.createElement('p');
-        p.className = 'font-body-md leading-relaxed whitespace-pre-wrap';
-        p.textContent = msg.text;
-        inner.appendChild(p);
-    }
-
-    if (msg.attachments && msg.attachments.length > 0) {
-        const attContainer = document.createElement('div');
-        attContainer.className = "mt-3 space-y-2";
-        msg.attachments.forEach(att => {
-            const isImg = att.type && att.type.startsWith('image/');
-            const div = document.createElement('div');
-            div.className = "flex flex-col gap-2";
-            if (isImg) {
-                const img = document.createElement('img');
-                img.src = att.data;
-                img.className = "max-w-full rounded-lg border border-white/10 shadow-sm";
-                img.alt = "attachment";
-                div.appendChild(img);
-            }
-            const fileDiv = document.createElement('div');
-            fileDiv.className = "flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70";
-            fileDiv.innerHTML = `
-                <span class="material-symbols-outlined text-sm">attachment</span>
-                <span class="truncate">${att.name}</span>
-            `;
-            div.appendChild(fileDiv);
-            attContainer.appendChild(div);
-        });
-        inner.appendChild(attContainer);
-    }
-    
-    wrapper.appendChild(inner);
-    if (targetContainer) {
-        targetContainer.appendChild(wrapper);
-    } else {
-        messagesContainer.appendChild(wrapper);
-    }
-}
-
-const historySearch = document.getElementById('history-search');
-historySearch.oninput = (e) => loadChatHistory(e.target.value);
-
-function loadChatHistory(filter = '') {
-    const historyRef = ref(db, `users/${currentUserId}/chats`);
-    onValue(historyRef, (snapshot) => {
-        const container = document.getElementById('history-container');
-        container.innerHTML = '';
-        const chats = [];
-        snapshot.forEach((child) => {
-            chats.push({ id: child.key, ...child.val() });
-        });
-        chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-
-        const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
-
-        filteredChats.forEach(chat => {
-            const btn = document.createElement('button');
-            btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
-            btn.onclick = () => {
-                if (currentChatId !== chat.id) {
-                    // Отключаем старый слушатель
-                    if (activeChatListener) {
-                        off(ref(db, activeChatListener));
-                        activeChatListener = null;
-                    }
-                    currentChatId = chat.id;
-                    listenToChat(chat.id);
-                    loadChatHistory(filter);
-                }
-                if (window.innerWidth < 1024) toggleDrawer();
+            // 2. Push User Message to DB
+            const userMsg = {
+                sender: 'user',
+                text: text,
+                attachments: attachmentsData,
+                timestamp: serverTimestamp(),
+                model: currentModel.id
             };
-            btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
-            container.appendChild(btn);
+            await push(messagesRef, userMsg);
+
+            // Reset inputs
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            attachedFiles = [];
+            renderFilePreviews();
+
+            // 3. AI Simulation Logic (Improved - responds to every message)
+            setTimeout(async () => {
+                const responses = [
+                    `I've analyzed your input using the ${currentModel.name} parameters. How should we proceed with this data?`,
+                    `The Obsidian Core has processed that request. Insights are ready for deployment.`,
+                    `Confirmed. I'm cross-referencing your query with the latest dataset.`,
+                    `Intriguing perspective. I'm calculating the potential outcomes based on your instructions.`
+                ];
+                const aiText = responses[Math.floor(Math.random() * responses.length)];
+                
+                await push(messagesRef, {
+                    sender: 'ai',
+                    text: `Core Response [${currentModel.name}]: ${aiText}${attachmentsData.length > 0 ? ` I have also reviewed the ${attachmentsData.length} attached document(s).` : ''}`,
+                    timestamp: serverTimestamp()
+                });
+            }, 1000);
+        }
+
+        sendBtn.onclick = sendMessage;
+        messageInput.addEventListener('keydown', (e) => { 
+            if(e.key === 'Enter' && !e.shiftKey) { 
+                e.preventDefault(); 
+                sendMessage(); 
+            } 
         });
-    });
-}
 
-window.toggleDrawer = () => {
-    const drawer = document.getElementById('side-drawer');
-    const overlay = document.getElementById('drawer-overlay');
-    const isOpen = !drawer.classList.contains('-translate-x-full');
-    if (isOpen) {
-        drawer.classList.add('-translate-x-full');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-    } else {
-        drawer.classList.remove('-translate-x-full');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-    }
-};
+        document.querySelectorAll('.sample-prompt').forEach(btn => {
+            btn.onclick = () => {
+                messageInput.value = btn.textContent;
+                messageInput.style.height = 'auto';
+                messageInput.style.height = messageInput.scrollHeight + 'px';
+            };
+        });
 
-messageInput.oninput = function() {
-    this.style.height = 'auto';
-    const newHeight = Math.min(this.scrollHeight, 200);
-    this.style.height = newHeight + 'px';
-};
-</script>
+        function listenToChat(chatId) {
+            if (activeChatListener) {
+                off(ref(db, activeChatListener));
+            }
+            
+            const path = `users/${currentUserId}/chats/${chatId}/messages`;
+            activeChatListener = path;
+            const messagesRef = ref(db, path);
+            
+            // Initial load of the chat
+            onValue(messagesRef, (snapshot) => {
+                if (chatId !== currentChatId) return;
+                
+                if (snapshot.exists()) {
+                    welcomeState.style.display = 'none';
+                    messagesContainer.innerHTML = '';
+                    snapshot.forEach((child) => {
+                        appendMessageUI(child.val());
+                    });
+                } else {
+                    messagesContainer.innerHTML = '';
+                    messagesContainer.appendChild(welcomeState);
+                    welcomeState.style.display = 'block';
+                }
+                messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+            });
+        }
+
+        function appendMessageUI(msg) {
+            const isUser = msg.sender === 'user';
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300 mb-stack-md`;
+            
+            const inner = document.createElement('div');
+            inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
+            
+            if (!isUser) {
+                inner.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
+                    </div>
+                `;
+            }
+            
+            if (msg.text) {
+                const p = document.createElement('p');
+                p.className = 'font-body-md leading-relaxed whitespace-pre-wrap text-on-surface';
+                p.textContent = msg.text;
+                inner.appendChild(p);
+            }
+
+            if (msg.attachments && msg.attachments.length > 0) {
+                const attContainer = document.createElement('div');
+                attContainer.className = "mt-3 space-y-2";
+                msg.attachments.forEach(att => {
+                    const isImg = att.type && att.type.startsWith('image/');
+                    const div = document.createElement('div');
+                    div.className = "flex flex-col gap-2";
+                    if (isImg) {
+                        div.innerHTML = `<img src="${att.data}" class="max-w-full rounded-lg border border-white/10 shadow-sm" alt="attachment" />`;
+                    }
+                    div.innerHTML += `
+                        <div class="flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70">
+                            <span class="material-symbols-outlined text-sm">attachment</span>
+                            <span class="truncate">${att.name}</span>
+                        </div>
+                    `;
+                    attContainer.appendChild(div);
+                });
+                inner.appendChild(attContainer);
+            }
+            
+            wrapper.appendChild(inner);
+            messagesContainer.appendChild(wrapper);
+            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+        }
+
+        const historySearch = document.getElementById('history-search');
+        historySearch.oninput = (e) => loadChatHistory(e.target.value);
+
+        function loadChatHistory(filter = '') {
+            const historyRef = ref(db, `users/${currentUserId}/chats`);
+            onValue(historyRef, (snapshot) => {
+                const container = document.getElementById('history-container');
+                container.innerHTML = '';
+                const chats = [];
+                snapshot.forEach((child) => {
+                    chats.push({ id: child.key, ...child.val() });
+                });
+                chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+                const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
+
+                filteredChats.forEach(chat => {
+                    const btn = document.createElement('button');
+                    btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
+                    btn.onclick = () => {
+                        if (currentChatId !== chat.id) {
+                            currentChatId = chat.id;
+                            listenToChat(chat.id);
+                        }
+                        if (window.innerWidth < 1024) toggleDrawer();
+                    };
+                    btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
+                    container.appendChild(btn);
+                });
+            });
+        }
+
+        window.toggleDrawer = () => {
+            const drawer = document.getElementById('side-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = !drawer.classList.contains('-translate-x-full');
+            if (isOpen) {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        };
+
+        messageInput.oninput = function() {
+            this.style.height = 'auto';
+            const newHeight = Math.min(this.scrollHeight, 200);
+            this.style.height = newHeight + 'px';
+        };
+    </script>
 </body></html>
