@@ -624,34 +624,33 @@ const sendBtn = document.getElementById('send-btn');
 const messagesContainer = document.getElementById('messages-container');
 const welcomeState = document.getElementById('welcome-state');
 
-// Храним ID уже отображенных сообщений
-let renderedMessageIds = new Set();
+// Глобальные переменные для отслеживания состояния
+let currentChatId = null;
+let activeChatListener = null;
+let isFirstMessage = true;
 
 function startNewChat() {
+    // Отключаем старый слушатель
     if (activeChatListener) {
-        off(ref(db, activeChatListener));
+        off(activeChatListener);
         activeChatListener = null;
     }
+    
     currentChatId = 'chat_' + Date.now();
-    renderedMessageIds = new Set();
+    isFirstMessage = true;
+    
+    // Очищаем контейнер и показываем welcome
     messagesContainer.innerHTML = '';
-    // Создаем новый welcome state
-    const newWelcome = document.createElement('div');
-    newWelcome.id = 'welcome-state';
-    newWelcome.className = 'py-12 text-center space-y-6';
-    newWelcome.innerHTML = `
-        <img alt="Tigr Logo" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
-        <h2 class="font-headline-lg text-on-surface opacity-90">How can I assist your workflow today?</h2>
-        <div class="flex flex-wrap justify-center gap-2">
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Analyze toxicity in text</button>
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Review model metrics</button>
-            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Generate summary report</button>
-        </div>
-    `;
-    messagesContainer.appendChild(newWelcome);
+    const welcome = document.getElementById('welcome-state');
+    if (welcome) {
+        messagesContainer.appendChild(welcome);
+        welcome.style.display = 'block';
+    }
     
     attachedFiles = [];
     renderFilePreviews();
+    
+    // Подписываемся на чат
     listenToChat(currentChatId);
 }
 
@@ -664,7 +663,8 @@ async function sendMessage() {
     // Если нет ID чата, создаем новый
     if (!currentChatId) {
         startNewChat();
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Даем время на создание
+        await new Promise(resolve => setTimeout(resolve, 200));
     }
 
     const chatId = currentChatId;
@@ -674,9 +674,12 @@ async function sendMessage() {
     const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
     const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
     
-    // Скрываем welcome state
-    const welcome = document.getElementById('welcome-state');
-    if (welcome) welcome.style.display = 'none';
+    // Скрываем welcome при первом сообщении
+    if (isFirstMessage) {
+        isFirstMessage = false;
+        const welcome = document.getElementById('welcome-state');
+        if (welcome) welcome.style.display = 'none';
+    }
 
     // Обновляем метаданные чата
     await set(chatRef, { 
@@ -693,6 +696,11 @@ async function sendMessage() {
         timestamp: serverTimestamp(),
         model: currentModel.id
     };
+    
+    // Добавляем сообщение вручную в UI сразу
+    appendMessageUI(userMsg);
+    
+    // Сохраняем в Firebase
     await push(messagesRef, userMsg);
 
     // Очищаем поле ввода
@@ -711,11 +719,17 @@ async function sendMessage() {
         ];
         const aiText = responses[Math.floor(Math.random() * responses.length)];
         
-        await push(messagesRef, {
+        const aiMsg = {
             sender: 'ai',
             text: `Core Response [${currentModel.name}]: ${aiText}`,
             timestamp: serverTimestamp()
-        });
+        };
+        
+        // Добавляем ответ AI в UI сразу
+        appendMessageUI(aiMsg);
+        
+        // Сохраняем в Firebase
+        await push(messagesRef, aiMsg);
     }, 1000);
 }
 
@@ -738,70 +752,62 @@ document.querySelectorAll('.sample-prompt').forEach(btn => {
 function listenToChat(chatId) {
     // Отключаем предыдущий слушатель
     if (activeChatListener) {
-        off(ref(db, activeChatListener));
+        off(activeChatListener);
         activeChatListener = null;
     }
     
     const path = `users/${currentUserId}/chats/${chatId}/messages`;
-    activeChatListener = path;
     const messagesRef = ref(db, path);
     
-    // Используем onChildAdded для добавления новых сообщений
-    // и onValue для начальной загрузки
-    let isInitialLoad = true;
+    // Сохраняем ссылку на слушатель для возможности отключения
+    activeChatListener = messagesRef;
     
+    // Слушаем только новые сообщения
     onValue(messagesRef, (snapshot) => {
-        // Проверяем, что мы все еще в том же чате
+        // Проверяем, что это наш текущий чат
         if (chatId !== currentChatId) return;
         
+        // Получаем все сообщения
+        const messages = [];
         if (snapshot.exists()) {
-            const messages = [];
             snapshot.forEach((child) => {
                 messages.push({ id: child.key, ...child.val() });
             });
-            
-            // Сортируем по времени
-            messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-            
-            if (isInitialLoad) {
-                // При первой загрузке показываем все сообщения
-                isInitialLoad = false;
-                renderedMessageIds = new Set();
-                messagesContainer.innerHTML = '';
-                
-                // Скрываем welcome
-                const welcome = document.getElementById('welcome-state');
-                if (welcome) welcome.style.display = 'none';
-                
-                messages.forEach(msg => {
-                    appendMessageUI(msg);
-                    renderedMessageIds.add(msg.id);
-                });
-            } else {
-                // При обновлении добавляем только новые сообщения
-                const welcome = document.getElementById('welcome-state');
-                if (welcome) welcome.style.display = 'none';
-                
-                messages.forEach(msg => {
-                    if (!renderedMessageIds.has(msg.id)) {
-                        appendMessageUI(msg);
-                        renderedMessageIds.add(msg.id);
-                    }
-                });
-            }
-            
-            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-        } else {
-            // Если сообщений нет, показываем welcome
-            isInitialLoad = true;
+        }
+        
+        // Если сообщений нет - показываем welcome
+        if (messages.length === 0) {
             const welcome = document.getElementById('welcome-state');
             if (welcome) {
                 messagesContainer.innerHTML = '';
                 messagesContainer.appendChild(welcome);
                 welcome.style.display = 'block';
             }
-            renderedMessageIds = new Set();
+            isFirstMessage = true;
+            return;
         }
+        
+        // Сортируем по времени
+        messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+        
+        // Проверяем, нужно ли обновлять UI
+        // Если количество сообщений в UI меньше, чем в Firebase - добавляем недостающие
+        const currentMessages = messagesContainer.querySelectorAll('[data-msg-id]');
+        const currentIds = new Set();
+        currentMessages.forEach(el => currentIds.add(el.dataset.msgId));
+        
+        // Скрываем welcome если есть сообщения
+        const welcome = document.getElementById('welcome-state');
+        if (welcome) welcome.style.display = 'none';
+        
+        // Добавляем только те сообщения, которых еще нет в UI
+        messages.forEach(msg => {
+            if (!currentIds.has(msg.id)) {
+                appendMessageUI(msg);
+            }
+        });
+        
+        messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
     });
 }
 
@@ -809,7 +815,12 @@ function appendMessageUI(msg) {
     const isUser = msg.sender === 'user';
     const wrapper = document.createElement('div');
     wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300 mb-stack-md`;
-    wrapper.dataset.msgId = msg.id;
+    if (msg.id) {
+        wrapper.dataset.msgId = msg.id;
+    } else {
+        // Если ID нет (временное сообщение), даем временный ID
+        wrapper.dataset.msgId = 'temp_' + Date.now() + '_' + Math.random();
+    }
     
     const inner = document.createElement('div');
     inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
@@ -885,11 +896,16 @@ function loadChatHistory(filter = '') {
                 if (currentChatId !== chat.id) {
                     // Отключаем старый слушатель
                     if (activeChatListener) {
-                        off(ref(db, activeChatListener));
+                        off(activeChatListener);
                         activeChatListener = null;
                     }
                     currentChatId = chat.id;
-                    renderedMessageIds = new Set();
+                    isFirstMessage = false;
+                    
+                    // Очищаем контейнер
+                    messagesContainer.innerHTML = '';
+                    
+                    // Подписываемся на чат
                     listenToChat(chat.id);
                     loadChatHistory(filter);
                 }
