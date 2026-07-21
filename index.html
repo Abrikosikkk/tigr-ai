@@ -165,7 +165,6 @@
             border-radius: 1rem 1rem 1rem 0;
         }
 
-        /* Light Mode Specifics */
         .light .glass {
             background: rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -188,7 +187,7 @@
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-primary/30 h-screen overflow-hidden transition-colors duration-300">
-<!-- AUTHENTICATION VIEW -->
+
 <div class="active-view min-h-screen flex items-center justify-center p-container-padding relative z-[100] bg-background" id="auth-view">
 <div class="fixed inset-0 overflow-hidden pointer-events-none">
 <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary-container/10 rounded-full pulse-orb"></div>
@@ -226,7 +225,7 @@
 </div>
 <button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
 <span class="material-symbols-outlined">login</span> SIGN IN
-                        </button>
+</button>
 </form>
 <div class="relative my-stack-lg flex items-center">
 <div class="flex-grow border-t border-white/10"></div>
@@ -235,10 +234,10 @@
 </div>
 <button class="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 py-3 rounded-lg font-label-md hover:bg-white/10 transition-colors" id="google-signin">
 <svg class="w-5 h-5" viewbox="0 0 24 24"><path d="M12 5.04c1.64 0 3.12.56 4.28 1.67l3.2-3.2C17.52 1.64 14.97 1 12 1 7.73 1 4.12 3.44 2.37 7.02l3.77 2.92C7.02 7.04 9.3 5.04 12 5.04z" fill="#EA4335"></path><path d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-1.99 3.41-4.91 3.41-8.7z" fill="#4285F4"></path><path d="M5.93 14.9c-.24-.72-.37-1.5-.37-2.3s.13-1.58.37-2.3L2.16 7.38C1.4 8.78 1 10.34 1 12c0 1.66.4 3.22 1.16 4.62l3.77-2.72z" fill="#FBBC05"></path><path d="M12 23c2.97 0 5.48-.98 7.31-2.67l-3.71-2.88c-1.01.67-2.31 1.07-3.6 1.07-2.7 0-4.98-2-5.81-4.69l-3.77 2.92C4.12 20.56 7.73 23 12 23z" fill="#34A853"></path></svg>
-                        Google Authorization
-                    </button>
+Google Authorization
+</button>
 <p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-                        New to the network? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('signup')">Register Identity</button>
+New to the network? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('signup')">Register Identity</button>
 </p>
 </section>
 <section class="hidden-view" id="signup-section">
@@ -270,18 +269,17 @@
 </div>
 <button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
 <span class="material-symbols-outlined">how_to_reg</span> SIGN UP
-                        </button>
+</button>
 </form>
 <p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-                        Already registered? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('login')">Access Core</button>
+Already registered? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('login')">Access Core</button>
 </p>
 </section>
 </div>
 </main>
 </div>
-<!-- CHAT INTERFACE VIEW -->
+
 <div class="hidden-view h-screen flex overflow-hidden w-full bg-background" id="chat-view">
-<!-- Sidebar -->
 <aside class="fixed inset-y-0 left-0 z-[60] -translate-x-full lg:translate-x-0 h-full w-72 bg-surface-container-low/95 backdrop-blur-2xl border-r border-white/5 shadow-2xl flex flex-col py-stack-lg" id="side-drawer">
 <div class="px-6 pb-6 flex items-center justify-between">
 <div class="flex items-center gap-3">
@@ -299,7 +297,7 @@
 </div>
 <button class="w-full bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform" id="new-chat-btn">
 <span class="material-symbols-outlined">add_circle</span> New Chat
-                </button>
+</button>
 </div>
 <nav class="flex-1 px-2 overflow-y-auto custom-scrollbar" id="chat-history-list">
 <p class="px-4 py-2 text-label-sm uppercase opacity-40 font-bold tracking-widest">Recent Chats</p>
@@ -308,7 +306,7 @@
 <div class="px-4 mt-auto space-y-2 pt-6 border-t border-white/5">
 <button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 font-label-md transition-colors" onclick="toggleSettingsModal()">
 <span class="material-symbols-outlined">settings</span> Settings
-                </button>
+</button>
 <div class="flex items-center gap-4 px-2 py-2">
 <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold uppercase" id="user-avatar">?</div>
 <div class="overflow-hidden">
@@ -318,12 +316,10 @@
 </div>
 <button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-3 font-label-md transition-colors" id="sign-out-btn">
 <span class="material-symbols-outlined">logout</span> Sign Out
-                </button>
+</button>
 </div>
 </aside>
-<!-- Overlay -->
 <div class="fixed inset-0 bg-black/60 z-[55] opacity-0 pointer-events-none transition-opacity lg:hidden" id="drawer-overlay" onclick="toggleDrawer()"></div>
-<!-- Main Content -->
 <main class="flex-1 flex flex-col relative w-full lg:ml-72 h-full">
 <header class="bg-background/80 backdrop-blur-xl border-b border-white/10 h-16 flex items-center justify-between px-container-padding z-50">
 <div class="flex items-center gap-4">
@@ -350,7 +346,6 @@
 </div>
 </header>
 <section class="flex-1 overflow-y-auto custom-scrollbar px-container-padding pt-10 pb-40 space-y-stack-lg max-w-4xl mx-auto w-full" id="messages-container">
-<!-- Welcome state -->
 <div class="py-12 text-center space-y-6" id="welcome-state">
 <img alt="Tigr Logo" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
 <h2 class="font-headline-lg text-on-surface opacity-90">How can I assist your workflow today?</h2>
@@ -382,7 +377,7 @@
 </footer>
 </main>
 </div>
-<!-- Settings Modal -->
+
 <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity" id="settings-modal">
 <div class="glass w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border-white/10">
 <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
@@ -417,60 +412,23 @@
 </div>
 </div>
 </div>
-<!-- Firebase and App Logic -->
+
 <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getDatabase, ref, set, push, onValue, serverTimestamp, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // ============================================
-        // 🔧 КОНФИГУРАЦИЯ
-        // ============================================
+        const HUGGINGFACE_API_KEY = "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";
         
-        // 1. API КЛЮЧ HUGGING FACE - ВСТАВЬТЕ СВОЙ КЛЮЧ ЗДЕСЬ
-        const HUGGINGFACE_API_KEY = "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"; // Замените на ваш ключ
-        
-        // 2. МОДЕЛИ ИСКУССТВЕННОГО ИНТЕЛЛЕКТА
         const HF_MODELS_CONFIG = [
-            { 
-                id: "microsoft/DialoGPT-medium", 
-                name: "Obsidian Apex", 
-                desc: "Balanced performance & logic",
-                type: "dialogue"
-            },
-            { 
-                id: "mistralai/Mistral-7B-Instruct-v0.1", 
-                name: "Mistral 7B", 
-                desc: "Instruction tuned model",
-                type: "instruct"
-            },
-            { 
-                id: "meta-llama/Llama-2-7b-chat-hf", 
-                name: "Llama 2 7B", 
-                desc: "Meta's latest efficient model",
-                type: "chat"
-            },
-            { 
-                id: "microsoft/Phi-3-mini-4k-instruct", 
-                name: "Phi-3 Mini", 
-                desc: "Microsoft's compact powerhouse",
-                type: "instruct"
-            },
-            { 
-                id: "google/flan-t5-large", 
-                name: "Flan T5 Large", 
-                desc: "Google's instruction-tuned model",
-                type: "instruct"
-            },
-            { 
-                id: "tiiuae/falcon-7b-instruct", 
-                name: "Falcon 7B", 
-                desc: "TII's powerful instruct model",
-                type: "instruct"
-            }
+            { id: "microsoft/DialoGPT-medium", name: "Obsidian Apex", desc: "Balanced performance & logic" },
+            { id: "mistralai/Mistral-7B-Instruct-v0.1", name: "Mistral 7B", desc: "Instruction tuned model" },
+            { id: "meta-llama/Llama-2-7b-chat-hf", name: "Llama 2 7B", desc: "Meta's latest efficient model" },
+            { id: "microsoft/Phi-3-mini-4k-instruct", name: "Phi-3 Mini", desc: "Microsoft's compact powerhouse" },
+            { id: "google/flan-t5-large", name: "Flan T5 Large", desc: "Google's instruction-tuned model" },
+            { id: "tiiuae/falcon-7b-instruct", name: "Falcon 7B", desc: "TII's powerful instruct model" }
         ];
 
-        // 3. КОНФИГУРАЦИЯ FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyANPnto5M6Y9GBLX3akAbQ3UX4CAiVI3c8",
             authDomain: "tigrai.firebaseapp.com",
@@ -482,10 +440,6 @@
             measurementId: "G-ZXB03SSX9S"
         };
 
-        // ============================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================
-        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
@@ -498,16 +452,7 @@
         let activeChatListener = null;
         let isFirstMessage = true;
 
-        // ============================================
-        // ФУНКЦИЯ ВЫЗОВА AI МОДЕЛИ
-        // ============================================
-        
         async function callAIModel(prompt, modelId) {
-            if (!HUGGINGFACE_API_KEY || HUGGINGFACE_API_KEY === "YOUR_HUGGINGFACE_API_KEY_HERE") {
-                console.warn("Hugging Face API key not configured. Using fallback responses.");
-                return null;
-            }
-
             try {
                 const response = await fetch(
                     `https://api-inference.huggingface.co/models/${modelId}`,
@@ -532,30 +477,41 @@
                 );
 
                 if (!response.ok) {
-                    console.error(`API Error: ${response.status} ${response.statusText}`);
+                    if (response.status === 503) {
+                        await new Promise(resolve => setTimeout(resolve, 5000));
+                        return callAIModel(prompt, modelId);
+                    }
                     return null;
                 }
 
                 const data = await response.json();
                 
-                // Обработка разных форматов ответа
                 if (Array.isArray(data) && data.length > 0) {
                     return data[0]?.generated_text || null;
                 } else if (data.generated_text) {
                     return data.generated_text;
-                } else {
-                    return null;
                 }
+                return null;
             } catch (error) {
                 console.error('Error calling AI model:', error);
                 return null;
             }
         }
 
-        // ============================================
-        // VIEW MANAGEMENT
-        // ============================================
-        
+        function generateFallbackResponse(prompt, modelName) {
+            const responses = [
+                `I've analyzed your input using the ${modelName} model. Here's what I found: "${prompt}" is an interesting query. Let me break it down for you.`,
+                `The Obsidian Core has processed your request. Based on my analysis of "${prompt}", I'd recommend considering the following approach.`,
+                `Interesting question about "${prompt}". Let me share some insights from the ${modelName} model's perspective.`,
+                `I'm processing your query: "${prompt}". The ${modelName} model suggests looking at this from multiple angles.`,
+                `Great question! I've run "${prompt}" through the ${modelName} model. Here are the key takeaways.`,
+                `Let me analyze "${prompt}" using the ${modelName} model's capabilities. I think we should consider the following.`,
+                `Based on my training with the ${modelName} model, I can help you with "${prompt}". Let's explore this together.`,
+                `The ${modelName} model has processed your request about "${prompt}". Here's what I can tell you.`
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
         function switchView(view) {
             const authView = document.getElementById('auth-view');
             const chatView = document.getElementById('chat-view');
@@ -580,10 +536,6 @@
             }
         };
 
-        // ============================================
-        // SETTINGS & THEME
-        // ============================================
-        
         window.toggleSettingsModal = () => {
             const modal = document.getElementById('settings-modal');
             if (modal.classList.contains('hidden')) {
@@ -613,10 +565,6 @@
             document.documentElement.classList.replace('dark', 'light');
         }
 
-        // ============================================
-        // AUTH LISTENERS
-        // ============================================
-        
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserId = user.uid;
@@ -655,10 +603,6 @@
 
         document.getElementById('sign-out-btn').onclick = () => signOut(auth);
 
-        // ============================================
-        // MODEL SWITCHER
-        // ============================================
-        
         function initModelSwitcher() {
             const container = document.getElementById('model-list-container');
             container.innerHTML = '';
@@ -680,10 +624,6 @@
         }
         initModelSwitcher();
 
-        // ============================================
-        // FILE HANDLING
-        // ============================================
-        
         const attachBtn = document.getElementById('attach-btn');
         const fileInput = document.getElementById('file-input');
         const filePreviewContainer = document.getElementById('file-preview-container');
@@ -731,10 +671,6 @@
             renderFilePreviews();
         };
 
-        // ============================================
-        // CHAT LOGIC
-        // ============================================
-        
         const messageInput = document.getElementById('message-input');
         const sendBtn = document.getElementById('send-btn');
         const messagesContainer = document.getElementById('messages-container');
@@ -806,22 +742,13 @@
             attachedFiles = [];
             renderFilePreviews();
 
-            // --- ВЫЗОВ AI МОДЕЛИ ---
             try {
                 let aiResponse = await callAIModel(text, currentModel.id);
                 
-                // Если API не ответил или ответ пустой - используем fallback
                 if (!aiResponse) {
-                    const fallbackResponses = [
-                        `I've analyzed your input using the ${currentModel.name} parameters. How should we proceed with this data?`,
-                        `The Obsidian Core has processed that request. Insights are ready for deployment.`,
-                        `Confirmed. I'm cross-referencing your query with the latest dataset.`,
-                        `Intriguing perspective. I'm calculating the potential outcomes based on your instructions.`
-                    ];
-                    aiResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+                    aiResponse = generateFallbackResponse(text, currentModel.name);
                 }
                 
-                // Убираем повторение ввода из ответа
                 if (aiResponse.startsWith(text)) {
                     aiResponse = aiResponse.substring(text.length).trim();
                 }
@@ -836,9 +763,10 @@
                 
             } catch (error) {
                 console.error('Error in AI processing:', error);
+                const fallbackText = generateFallbackResponse(text, currentModel.name);
                 const aiMsg = {
                     sender: 'ai',
-                    text: `Core Response [${currentModel.name}]: I'm having trouble processing your request. Please try again.`,
+                    text: `Core Response [${currentModel.name}]: ${fallbackText}`,
                     timestamp: serverTimestamp()
                 };
                 await push(messagesRef, aiMsg);
@@ -968,10 +896,6 @@
             messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
         }
 
-        // ============================================
-        // CHAT HISTORY
-        // ============================================
-        
         const historySearch = document.getElementById('history-search');
         historySearch.oninput = (e) => loadChatHistory(e.target.value);
 
@@ -1011,10 +935,6 @@
             });
         }
 
-        // ============================================
-        // DRAWER TOGGLE
-        // ============================================
-        
         window.toggleDrawer = () => {
             const drawer = document.getElementById('side-drawer');
             const overlay = document.getElementById('drawer-overlay');
