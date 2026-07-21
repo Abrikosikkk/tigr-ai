@@ -617,222 +617,276 @@
     };
 
     // --- CHAT LOGIC ---
-    const messageInput = document.getElementById('message-input');
-    const sendBtn = document.getElementById('send-btn');
-    const messagesContainer = document.getElementById('messages-container');
-    const welcomeState = document.getElementById('welcome-state');
+const messageInput = document.getElementById('message-input');
+const sendBtn = document.getElementById('send-btn');
+const messagesContainer = document.getElementById('messages-container');
+const welcomeState = document.getElementById('welcome-state');
 
-    function startNewChat() {
-        if (activeChatListener) {
-            off(ref(db, activeChatListener));
-        }
-        currentChatId = 'chat_' + Date.now();
-        messagesContainer.innerHTML = '';
-        messagesContainer.appendChild(welcomeState);
-        welcomeState.style.display = 'block';
-        attachedFiles = [];
-        renderFilePreviews();
-        listenToChat(currentChatId);
+function startNewChat() {
+    if (activeChatListener) {
+        off(ref(db, activeChatListener));
+        activeChatListener = null;
+    }
+    currentChatId = 'chat_' + Date.now();
+    messagesContainer.innerHTML = '';
+    // Создаем welcome state заново, чтобы избежать проблем с ссылками
+    const newWelcome = document.createElement('div');
+    newWelcome.id = 'welcome-state';
+    newWelcome.className = 'py-12 text-center space-y-6';
+    newWelcome.innerHTML = `
+        <img alt="Tigr Logo" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
+        <h2 class="font-headline-lg text-on-surface opacity-90">How can I assist your workflow today?</h2>
+        <div class="flex flex-wrap justify-center gap-2">
+            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Analyze toxicity in text</button>
+            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Review model metrics</button>
+            <button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Generate summary report</button>
+        </div>
+    `;
+    messagesContainer.appendChild(newWelcome);
+    
+    attachedFiles = [];
+    renderFilePreviews();
+    listenToChat(currentChatId);
+}
+
+document.getElementById('new-chat-btn').onclick = startNewChat;
+
+async function sendMessage() {
+    const text = messageInput.value.trim();
+    if ((!text && attachedFiles.length === 0) || !currentUserId) return;
+
+    // Проверяем, что currentChatId существует, если нет - создаем новый
+    if (!currentChatId) {
+        startNewChat();
     }
 
-    document.getElementById('new-chat-btn').onclick = startNewChat;
+    const chatId = currentChatId;
+    const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
+    const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
+    
+    const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
 
-    async function sendMessage() {
-        const text = messageInput.value.trim();
-        if ((!text && attachedFiles.length === 0) || !currentUserId) return;
+    const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
+    
+    await set(chatRef, { 
+        lastMessage: text || "Sent an attachment", 
+        timestamp: serverTimestamp(), 
+        title: chatTitle
+    });
 
-        const chatId = currentChatId;
-        const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
-        const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
-        
-        const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
+    await push(messagesRef, {
+        sender: 'user',
+        text: text,
+        attachments: attachmentsData,
+        timestamp: serverTimestamp(),
+        model: currentModel.id
+    });
 
-        const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
-        
-        await set(chatRef, { 
-            lastMessage: text || "Sent an attachment", 
-            timestamp: serverTimestamp(), 
-            title: chatTitle
+    messageInput.value = '';
+    messageInput.style.height = 'auto';
+    attachedFiles = [];
+    renderFilePreviews();
+
+    // Отправляем ответ AI с задержкой
+    setTimeout(async () => {
+        const aiMsgRef = push(messagesRef);
+        await set(aiMsgRef, {
+            sender: 'ai',
+            text: `Core Response [${currentModel.name}]: I've processed your input. ${attachmentsData.length > 0 ? `I've analyzed the ${attachmentsData.length} file(s) you shared.` : 'Continuing our thread.'}`,
+            timestamp: serverTimestamp()
         });
+    }, 800);
+}
 
-        await push(messagesRef, {
-            sender: 'user',
-            text: text,
-            attachments: attachmentsData,
-            timestamp: serverTimestamp(),
-            model: currentModel.id
-        });
+sendBtn.onclick = sendMessage;
+messageInput.addEventListener('keydown', (e) => { 
+    if(e.key === 'Enter' && !e.shiftKey) { 
+        e.preventDefault(); 
+        sendMessage(); 
+    } 
+});
 
-        messageInput.value = '';
+document.querySelectorAll('.sample-prompt').forEach(btn => {
+    btn.onclick = () => {
+        messageInput.value = btn.textContent;
         messageInput.style.height = 'auto';
-        attachedFiles = [];
-        renderFilePreviews();
+        messageInput.style.height = messageInput.scrollHeight + 'px';
+    };
+});
 
-        setTimeout(async () => {
-            const aiMsgRef = push(messagesRef);
-            await set(aiMsgRef, {
-                sender: 'ai',
-                text: `Core Response [${currentModel.name}]: I've processed your input. ${attachmentsData.length > 0 ? `I've analyzed the ${attachmentsData.length} file(s) you shared.` : 'Continuing our thread.'}`,
-                timestamp: serverTimestamp()
-            });
-        }, 800);
+function listenToChat(chatId) {
+    // Отключаем предыдущий слушатель
+    if (activeChatListener) {
+        off(ref(db, activeChatListener));
+        activeChatListener = null;
     }
-
-    sendBtn.onclick = sendMessage;
-    messageInput.addEventListener('keydown', (e) => { 
-        if(e.key === 'Enter' && !e.shiftKey) { 
-            e.preventDefault(); 
-            sendMessage(); 
-        } 
-    });
-
-    document.querySelectorAll('.sample-prompt').forEach(btn => {
-        btn.onclick = () => {
-            messageInput.value = btn.textContent;
-            messageInput.style.height = 'auto';
-            messageInput.style.height = messageInput.scrollHeight + 'px';
-        };
-    });
-
-    function listenToChat(chatId) {
-        if (activeChatListener && activeChatListener !== `users/${currentUserId}/chats/${chatId}/messages`) {
-            off(ref(db, activeChatListener));
-        }
+    
+    const path = `users/${currentUserId}/chats/${chatId}/messages`;
+    activeChatListener = path;
+    const messagesRef = ref(db, path);
+    
+    onValue(messagesRef, (snapshot) => {
+        // Проверяем, что это тот же чат
+        if (chatId !== currentChatId) return;
         
-        const path = `users/${currentUserId}/chats/${chatId}/messages`;
-        activeChatListener = path;
-        const messagesRef = ref(db, path);
+        // Очищаем контейнер только если у нас есть сообщения
+        const fragment = document.createDocumentFragment();
+        let hasMessages = false;
         
-        onValue(messagesRef, (snapshot) => {
-            if (chatId !== currentChatId) return;
+        if (snapshot.exists()) {
+            // Скрываем welcome state
+            const welcome = document.getElementById('welcome-state');
+            if (welcome) welcome.style.display = 'none';
             
-            // Re-render full list to ensure order and consistency while avoiding "clearing" feel for the user
-            // We use a fragment for performance
-            const fragment = document.createDocumentFragment();
-            let hasMessages = false;
-            
-            if (snapshot.exists()) {
-                welcomeState.style.display = 'none';
-                snapshot.forEach((child) => {
-                    const msg = child.val();
-                    appendMessageUI(msg, fragment);
-                    hasMessages = true;
-                });
-                
-                messagesContainer.innerHTML = '';
-                messagesContainer.appendChild(fragment);
-            } else {
-                messagesContainer.innerHTML = '';
-                messagesContainer.appendChild(welcomeState);
-                welcomeState.style.display = 'block';
-            }
-            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-        });
-    }
-
-    function appendMessageUI(msg, targetContainer = null) {
-        const isUser = msg.sender === 'user';
-        const wrapper = document.createElement('div');
-        wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
-        
-        const inner = document.createElement('div');
-        inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
-        
-        if (!isUser) {
-            inner.innerHTML = `
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
-                </div>
-            `;
-        }
-        
-        if (msg.text) {
-            const p = document.createElement('p');
-            p.className = 'font-body-md leading-relaxed whitespace-pre-wrap';
-            p.textContent = msg.text;
-            inner.appendChild(p);
-        }
-
-        if (msg.attachments && msg.attachments.length > 0) {
-            const attContainer = document.createElement('div');
-            attContainer.className = "mt-3 space-y-2";
-            msg.attachments.forEach(att => {
-                const isImg = att.type && att.type.startsWith('image/');
-                const div = document.createElement('div');
-                div.className = "flex flex-col gap-2";
-                if (isImg) {
-                    div.innerHTML = `<img src="${att.data}" class="max-w-full rounded-lg border border-white/10 shadow-sm" alt="attachment" />`;
-                }
-                div.innerHTML += `
-                    <div class="flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70">
-                        <span class="material-symbols-outlined text-sm">attachment</span>
-                        <span class="truncate">${att.name}</span>
-                    </div>
-                `;
-                attContainer.appendChild(div);
-            });
-            inner.appendChild(attContainer);
-        }
-        
-        wrapper.appendChild(inner);
-        if (targetContainer) {
-            targetContainer.appendChild(wrapper);
-        } else {
-            messagesContainer.appendChild(wrapper);
-        }
-    }
-
-    const historySearch = document.getElementById('history-search');
-    historySearch.oninput = (e) => loadChatHistory(e.target.value);
-
-    function loadChatHistory(filter = '') {
-        const historyRef = ref(db, `users/${currentUserId}/chats`);
-        onValue(historyRef, (snapshot) => {
-            const container = document.getElementById('history-container');
-            container.innerHTML = '';
-            const chats = [];
+            // Собираем все сообщения в фрагмент
+            const messages = [];
             snapshot.forEach((child) => {
-                chats.push({ id: child.key, ...child.val() });
+                messages.push({ id: child.key, ...child.val() });
             });
-            chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-
-            const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
-
-            filteredChats.forEach(chat => {
-                const btn = document.createElement('button');
-                btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
-                btn.onclick = () => {
-                    if (currentChatId !== chat.id) {
-                        currentChatId = chat.id;
-                        listenToChat(chat.id);
-                        loadChatHistory(filter);
-                    }
-                    if (window.innerWidth < 1024) toggleDrawer();
-                };
-                btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
-                container.appendChild(btn);
+            
+            // Сортируем по времени
+            messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            
+            // Очищаем контейнер и добавляем все сообщения
+            messagesContainer.innerHTML = '';
+            
+            messages.forEach(msg => {
+                appendMessageUI(msg, fragment);
             });
-        });
+            
+            hasMessages = true;
+        } else {
+            // Если сообщений нет, показываем welcome state
+            const welcome = document.getElementById('welcome-state');
+            if (welcome) {
+                messagesContainer.innerHTML = '';
+                messagesContainer.appendChild(welcome);
+                welcome.style.display = 'block';
+            }
+        }
+        
+        if (hasMessages && fragment.childNodes.length > 0) {
+            messagesContainer.appendChild(fragment);
+        }
+        
+        // Прокручиваем вниз
+        messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+    });
+}
+
+function appendMessageUI(msg, targetContainer = null) {
+    const isUser = msg.sender === 'user';
+    const wrapper = document.createElement('div');
+    wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`;
+    
+    const inner = document.createElement('div');
+    inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
+    
+    if (!isUser) {
+        inner.innerHTML = `
+            <div class="flex items-center gap-2 mb-2">
+                <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
+            </div>
+        `;
+    }
+    
+    if (msg.text) {
+        const p = document.createElement('p');
+        p.className = 'font-body-md leading-relaxed whitespace-pre-wrap';
+        p.textContent = msg.text;
+        inner.appendChild(p);
     }
 
-    window.toggleDrawer = () => {
-        const drawer = document.getElementById('side-drawer');
-        const overlay = document.getElementById('drawer-overlay');
-        const isOpen = !drawer.classList.contains('-translate-x-full');
-        if (isOpen) {
-            drawer.classList.add('-translate-x-full');
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-        } else {
-            drawer.classList.remove('-translate-x-full');
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-        }
-    };
+    if (msg.attachments && msg.attachments.length > 0) {
+        const attContainer = document.createElement('div');
+        attContainer.className = "mt-3 space-y-2";
+        msg.attachments.forEach(att => {
+            const isImg = att.type && att.type.startsWith('image/');
+            const div = document.createElement('div');
+            div.className = "flex flex-col gap-2";
+            if (isImg) {
+                const img = document.createElement('img');
+                img.src = att.data;
+                img.className = "max-w-full rounded-lg border border-white/10 shadow-sm";
+                img.alt = "attachment";
+                div.appendChild(img);
+            }
+            const fileDiv = document.createElement('div');
+            fileDiv.className = "flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70";
+            fileDiv.innerHTML = `
+                <span class="material-symbols-outlined text-sm">attachment</span>
+                <span class="truncate">${att.name}</span>
+            `;
+            div.appendChild(fileDiv);
+            attContainer.appendChild(div);
+        });
+        inner.appendChild(attContainer);
+    }
+    
+    wrapper.appendChild(inner);
+    if (targetContainer) {
+        targetContainer.appendChild(wrapper);
+    } else {
+        messagesContainer.appendChild(wrapper);
+    }
+}
 
-    messageInput.oninput = function() {
-        this.style.height = 'auto';
-        const newHeight = Math.min(this.scrollHeight, 200);
-        this.style.height = newHeight + 'px';
-    };
+const historySearch = document.getElementById('history-search');
+historySearch.oninput = (e) => loadChatHistory(e.target.value);
+
+function loadChatHistory(filter = '') {
+    const historyRef = ref(db, `users/${currentUserId}/chats`);
+    onValue(historyRef, (snapshot) => {
+        const container = document.getElementById('history-container');
+        container.innerHTML = '';
+        const chats = [];
+        snapshot.forEach((child) => {
+            chats.push({ id: child.key, ...child.val() });
+        });
+        chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+        const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
+
+        filteredChats.forEach(chat => {
+            const btn = document.createElement('button');
+            btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
+            btn.onclick = () => {
+                if (currentChatId !== chat.id) {
+                    // Отключаем старый слушатель
+                    if (activeChatListener) {
+                        off(ref(db, activeChatListener));
+                        activeChatListener = null;
+                    }
+                    currentChatId = chat.id;
+                    listenToChat(chat.id);
+                    loadChatHistory(filter);
+                }
+                if (window.innerWidth < 1024) toggleDrawer();
+            };
+            btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
+            container.appendChild(btn);
+        });
+    });
+}
+
+window.toggleDrawer = () => {
+    const drawer = document.getElementById('side-drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const isOpen = !drawer.classList.contains('-translate-x-full');
+    if (isOpen) {
+        drawer.classList.add('-translate-x-full');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+    } else {
+        drawer.classList.remove('-translate-x-full');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+    }
+};
+
+messageInput.oninput = function() {
+    this.style.height = 'auto';
+    const newHeight = Math.min(this.scrollHeight, 200);
+    this.style.height = newHeight + 'px';
+};
 </script>
 </body></html>
