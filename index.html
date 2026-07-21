@@ -624,9 +624,9 @@ const sendBtn = document.getElementById('send-btn');
 const messagesContainer = document.getElementById('messages-container');
 const welcomeState = document.getElementById('welcome-state');
 
-// Глобальные переменные для отслеживания состояния
-let currentChatId = null;
-let activeChatListener = null;
+// Используем существующие переменные, не объявляем заново
+// currentChatId уже объявлен выше
+// activeChatListener уже объявлен выше
 let isFirstMessage = true;
 
 function startNewChat() {
