@@ -421,27 +421,71 @@
 <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue, serverTimestamp, off, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue, serverTimestamp, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+        // ============================================
+        // 🔧 КОНФИГУРАЦИЯ
+        // ============================================
+        
+        // 1. API КЛЮЧ HUGGING FACE - ВСТАВЬТЕ СВОЙ КЛЮЧ ЗДЕСЬ
+        const HUGGINGFACE_API_KEY = "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"; // Замените на ваш ключ
+        
+        // 2. МОДЕЛИ ИСКУССТВЕННОГО ИНТЕЛЛЕКТА
         const HF_MODELS_CONFIG = [
-            { id: "obsidian-apex-v1", name: "Obsidian Apex", desc: "Balanced performance & logic" },
-            { id: "mistral-7b-instruct", name: "Mistral 7B", desc: "Instruction tuned model" },
-            { id: "llama-3-8b", name: "Llama 3 8B", desc: "Meta's latest efficient model" },
-            { id: "phi-3-mini", name: "Phi-3 Mini", desc: "Microsoft's compact powerhouse" }
+            { 
+                id: "microsoft/DialoGPT-medium", 
+                name: "Obsidian Apex", 
+                desc: "Balanced performance & logic",
+                type: "dialogue"
+            },
+            { 
+                id: "mistralai/Mistral-7B-Instruct-v0.1", 
+                name: "Mistral 7B", 
+                desc: "Instruction tuned model",
+                type: "instruct"
+            },
+            { 
+                id: "meta-llama/Llama-2-7b-chat-hf", 
+                name: "Llama 2 7B", 
+                desc: "Meta's latest efficient model",
+                type: "chat"
+            },
+            { 
+                id: "microsoft/Phi-3-mini-4k-instruct", 
+                name: "Phi-3 Mini", 
+                desc: "Microsoft's compact powerhouse",
+                type: "instruct"
+            },
+            { 
+                id: "google/flan-t5-large", 
+                name: "Flan T5 Large", 
+                desc: "Google's instruction-tuned model",
+                type: "instruct"
+            },
+            { 
+                id: "tiiuae/falcon-7b-instruct", 
+                name: "Falcon 7B", 
+                desc: "TII's powerful instruct model",
+                type: "instruct"
+            }
         ];
 
+        // 3. КОНФИГУРАЦИЯ FIREBASE
         const firebaseConfig = {
-  apiKey: "AIzaSyANPnto5M6Y9GBLX3akAbQ3UX4CAiVI3c8",
-  authDomain: "tigrai.firebaseapp.com",
-  databaseURL: "https://tigrai-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "tigrai",
-  storageBucket: "tigrai.firebasestorage.app",
-  messagingSenderId: "810876313696",
-  appId: "1:810876313696:web:a0ba29e51a3532a91ce305",
-  measurementId: "G-ZXB03SSX9S"
-};
+            apiKey: "AIzaSyANPnto5M6Y9GBLX3akAbQ3UX4CAiVI3c8",
+            authDomain: "tigrai.firebaseapp.com",
+            databaseURL: "https://tigrai-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "tigrai",
+            storageBucket: "tigrai.firebasestorage.app",
+            messagingSenderId: "810876313696",
+            appId: "1:810876313696:web:a0ba29e51a3532a91ce305",
+            measurementId: "G-ZXB03SSX9S"
+        };
 
-
+        // ============================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
@@ -452,9 +496,66 @@
         let currentModel = HF_MODELS_CONFIG[0];
         let attachedFiles = [];
         let activeChatListener = null;
-        let localMessages = []; // Session persistence
+        let isFirstMessage = true;
 
-        // --- VIEW MANAGEMENT ---
+        // ============================================
+        // ФУНКЦИЯ ВЫЗОВА AI МОДЕЛИ
+        // ============================================
+        
+        async function callAIModel(prompt, modelId) {
+            if (!HUGGINGFACE_API_KEY || HUGGINGFACE_API_KEY === "YOUR_HUGGINGFACE_API_KEY_HERE") {
+                console.warn("Hugging Face API key not configured. Using fallback responses.");
+                return null;
+            }
+
+            try {
+                const response = await fetch(
+                    `https://api-inference.huggingface.co/models/${modelId}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${HUGGINGFACE_API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify({
+                            inputs: prompt,
+                            parameters: {
+                                max_new_tokens: 250,
+                                temperature: 0.7,
+                                top_p: 0.95,
+                                do_sample: true,
+                                return_full_text: false,
+                                repetition_penalty: 1.1
+                            }
+                        })
+                    }
+                );
+
+                if (!response.ok) {
+                    console.error(`API Error: ${response.status} ${response.statusText}`);
+                    return null;
+                }
+
+                const data = await response.json();
+                
+                // Обработка разных форматов ответа
+                if (Array.isArray(data) && data.length > 0) {
+                    return data[0]?.generated_text || null;
+                } else if (data.generated_text) {
+                    return data.generated_text;
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error calling AI model:', error);
+                return null;
+            }
+        }
+
+        // ============================================
+        // VIEW MANAGEMENT
+        // ============================================
+        
         function switchView(view) {
             const authView = document.getElementById('auth-view');
             const chatView = document.getElementById('chat-view');
@@ -479,7 +580,10 @@
             }
         };
 
-        // --- SETTINGS & THEME ---
+        // ============================================
+        // SETTINGS & THEME
+        // ============================================
+        
         window.toggleSettingsModal = () => {
             const modal = document.getElementById('settings-modal');
             if (modal.classList.contains('hidden')) {
@@ -509,7 +613,10 @@
             document.documentElement.classList.replace('dark', 'light');
         }
 
-        // --- AUTH LISTENERS ---
+        // ============================================
+        // AUTH LISTENERS
+        // ============================================
+        
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserId = user.uid;
@@ -548,7 +655,10 @@
 
         document.getElementById('sign-out-btn').onclick = () => signOut(auth);
 
-        // --- MODEL SWITCHER ---
+        // ============================================
+        // MODEL SWITCHER
+        // ============================================
+        
         function initModelSwitcher() {
             const container = document.getElementById('model-list-container');
             container.innerHTML = '';
@@ -570,7 +680,10 @@
         }
         initModelSwitcher();
 
-        // --- FILE HANDLING ---
+        // ============================================
+        // FILE HANDLING
+        // ============================================
+        
         const attachBtn = document.getElementById('attach-btn');
         const fileInput = document.getElementById('file-input');
         const filePreviewContainer = document.getElementById('file-preview-container');
@@ -618,322 +731,307 @@
             renderFilePreviews();
         };
 
-        // --- CHAT LOGIC ---
-const messageInput = document.getElementById('message-input');
-const sendBtn = document.getElementById('send-btn');
-const messagesContainer = document.getElementById('messages-container');
-const welcomeState = document.getElementById('welcome-state');
-
-// Используем существующие переменные, не объявляем заново
-// currentChatId уже объявлен выше
-// activeChatListener уже объявлен выше
-let isFirstMessage = true;
-
-function startNewChat() {
-    // Отключаем старый слушатель
-    if (activeChatListener) {
-        off(activeChatListener);
-        activeChatListener = null;
-    }
-    
-    currentChatId = 'chat_' + Date.now();
-    isFirstMessage = true;
-    
-    // Очищаем контейнер и показываем welcome
-    messagesContainer.innerHTML = '';
-    const welcome = document.getElementById('welcome-state');
-    if (welcome) {
-        messagesContainer.appendChild(welcome);
-        welcome.style.display = 'block';
-    }
-    
-    attachedFiles = [];
-    renderFilePreviews();
-    
-    // Подписываемся на чат
-    listenToChat(currentChatId);
-}
-
-document.getElementById('new-chat-btn').onclick = startNewChat;
-
-async function sendMessage() {
-    const text = messageInput.value.trim();
-    if ((!text && attachedFiles.length === 0) || !currentUserId) return;
-
-    // Если нет ID чата, создаем новый
-    if (!currentChatId) {
-        startNewChat();
-        // Даем время на создание
-        await new Promise(resolve => setTimeout(resolve, 200));
-    }
-
-    const chatId = currentChatId;
-    const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
-    const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
-    
-    const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
-    const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
-    
-    // Скрываем welcome при первом сообщении
-    if (isFirstMessage) {
-        isFirstMessage = false;
-        const welcome = document.getElementById('welcome-state');
-        if (welcome) welcome.style.display = 'none';
-    }
-
-    // Обновляем метаданные чата
-    await set(chatRef, { 
-        lastMessage: text || "Sent an attachment", 
-        timestamp: serverTimestamp(), 
-        title: chatTitle
-    });
-
-    // Отправляем сообщение пользователя
-    const userMsg = {
-        sender: 'user',
-        text: text,
-        attachments: attachmentsData,
-        timestamp: serverTimestamp(),
-        model: currentModel.id
-    };
-    
-    // Добавляем сообщение вручную в UI сразу
-    appendMessageUI(userMsg);
-    
-    // Сохраняем в Firebase
-    await push(messagesRef, userMsg);
-
-    // Очищаем поле ввода
-    messageInput.value = '';
-    messageInput.style.height = 'auto';
-    attachedFiles = [];
-    renderFilePreviews();
-
-    // Отправляем ответ AI
-    setTimeout(async () => {
-        const responses = [
-            `I've analyzed your input using the ${currentModel.name} parameters. How should we proceed with this data?`,
-            `The Obsidian Core has processed that request. Insights are ready for deployment.`,
-            `Confirmed. I'm cross-referencing your query with the latest dataset.`,
-            `Intriguing perspective. I'm calculating the potential outcomes based on your instructions.`
-        ];
-        const aiText = responses[Math.floor(Math.random() * responses.length)];
+        // ============================================
+        // CHAT LOGIC
+        // ============================================
         
-        const aiMsg = {
-            sender: 'ai',
-            text: `Core Response [${currentModel.name}]: ${aiText}`,
-            timestamp: serverTimestamp()
-        };
-        
-        // Добавляем ответ AI в UI сразу
-        appendMessageUI(aiMsg);
-        
-        // Сохраняем в Firebase
-        await push(messagesRef, aiMsg);
-    }, 1000);
-}
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const messagesContainer = document.getElementById('messages-container');
+        const welcomeState = document.getElementById('welcome-state');
 
-sendBtn.onclick = sendMessage;
-messageInput.addEventListener('keydown', (e) => { 
-    if(e.key === 'Enter' && !e.shiftKey) { 
-        e.preventDefault(); 
-        sendMessage(); 
-    } 
-});
-
-document.querySelectorAll('.sample-prompt').forEach(btn => {
-    btn.onclick = () => {
-        messageInput.value = btn.textContent;
-        messageInput.style.height = 'auto';
-        messageInput.style.height = messageInput.scrollHeight + 'px';
-    };
-});
-
-function listenToChat(chatId) {
-    // Отключаем предыдущий слушатель
-    if (activeChatListener) {
-        off(activeChatListener);
-        activeChatListener = null;
-    }
-    
-    const path = `users/${currentUserId}/chats/${chatId}/messages`;
-    const messagesRef = ref(db, path);
-    
-    // Сохраняем ссылку на слушатель для возможности отключения
-    activeChatListener = messagesRef;
-    
-    // Слушаем только новые сообщения
-    onValue(messagesRef, (snapshot) => {
-        // Проверяем, что это наш текущий чат
-        if (chatId !== currentChatId) return;
-        
-        // Получаем все сообщения
-        const messages = [];
-        if (snapshot.exists()) {
-            snapshot.forEach((child) => {
-                messages.push({ id: child.key, ...child.val() });
-            });
-        }
-        
-        // Если сообщений нет - показываем welcome
-        if (messages.length === 0) {
+        function startNewChat() {
+            if (activeChatListener) {
+                off(activeChatListener);
+                activeChatListener = null;
+            }
+            
+            currentChatId = 'chat_' + Date.now();
+            isFirstMessage = true;
+            
+            messagesContainer.innerHTML = '';
             const welcome = document.getElementById('welcome-state');
             if (welcome) {
-                messagesContainer.innerHTML = '';
                 messagesContainer.appendChild(welcome);
                 welcome.style.display = 'block';
             }
-            isFirstMessage = true;
-            return;
+            
+            attachedFiles = [];
+            renderFilePreviews();
+            listenToChat(currentChatId);
         }
-        
-        // Сортируем по времени
-        messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-        
-        // Проверяем, нужно ли обновлять UI
-        // Если количество сообщений в UI меньше, чем в Firebase - добавляем недостающие
-        const currentMessages = messagesContainer.querySelectorAll('[data-msg-id]');
-        const currentIds = new Set();
-        currentMessages.forEach(el => currentIds.add(el.dataset.msgId));
-        
-        // Скрываем welcome если есть сообщения
-        const welcome = document.getElementById('welcome-state');
-        if (welcome) welcome.style.display = 'none';
-        
-        // Добавляем только те сообщения, которых еще нет в UI
-        messages.forEach(msg => {
-            if (!currentIds.has(msg.id)) {
-                appendMessageUI(msg);
+
+        document.getElementById('new-chat-btn').onclick = startNewChat;
+
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if ((!text && attachedFiles.length === 0) || !currentUserId) return;
+
+            if (!currentChatId) {
+                startNewChat();
+                await new Promise(resolve => setTimeout(resolve, 200));
             }
-        });
-        
-        messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-    });
-}
 
-function appendMessageUI(msg) {
-    const isUser = msg.sender === 'user';
-    const wrapper = document.createElement('div');
-    wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300 mb-stack-md`;
-    if (msg.id) {
-        wrapper.dataset.msgId = msg.id;
-    } else {
-        // Если ID нет (временное сообщение), даем временный ID
-        wrapper.dataset.msgId = 'temp_' + Date.now() + '_' + Math.random();
-    }
-    
-    const inner = document.createElement('div');
-    inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
-    
-    if (!isUser) {
-        const header = document.createElement('div');
-        header.className = 'flex items-center gap-2 mb-2';
-        header.innerHTML = `
-            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-            <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
-        `;
-        inner.appendChild(header);
-    }
-    
-    if (msg.text) {
-        const p = document.createElement('p');
-        p.className = 'font-body-md leading-relaxed whitespace-pre-wrap text-on-surface';
-        p.textContent = msg.text;
-        inner.appendChild(p);
-    }
-
-    if (msg.attachments && msg.attachments.length > 0) {
-        const attContainer = document.createElement('div');
-        attContainer.className = "mt-3 space-y-2";
-        msg.attachments.forEach(att => {
-            const isImg = att.type && att.type.startsWith('image/');
-            const div = document.createElement('div');
-            div.className = "flex flex-col gap-2";
-            if (isImg) {
-                const img = document.createElement('img');
-                img.src = att.data;
-                img.className = "max-w-full rounded-lg border border-white/10 shadow-sm";
-                img.alt = "attachment";
-                div.appendChild(img);
+            const chatId = currentChatId;
+            const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
+            const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
+            
+            const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
+            const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
+            
+            if (isFirstMessage) {
+                isFirstMessage = false;
+                const welcome = document.getElementById('welcome-state');
+                if (welcome) welcome.style.display = 'none';
             }
-            const fileDiv = document.createElement('div');
-            fileDiv.className = "flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70";
-            fileDiv.innerHTML = `
-                <span class="material-symbols-outlined text-sm">attachment</span>
-                <span class="truncate">${att.name}</span>
-            `;
-            div.appendChild(fileDiv);
-            attContainer.appendChild(div);
-        });
-        inner.appendChild(attContainer);
-    }
-    
-    wrapper.appendChild(inner);
-    messagesContainer.appendChild(wrapper);
-    messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-}
 
-const historySearch = document.getElementById('history-search');
-historySearch.oninput = (e) => loadChatHistory(e.target.value);
+            await set(chatRef, { 
+                lastMessage: text || "Sent an attachment", 
+                timestamp: serverTimestamp(), 
+                title: chatTitle
+            });
 
-function loadChatHistory(filter = '') {
-    const historyRef = ref(db, `users/${currentUserId}/chats`);
-    onValue(historyRef, (snapshot) => {
-        const container = document.getElementById('history-container');
-        container.innerHTML = '';
-        const chats = [];
-        snapshot.forEach((child) => {
-            chats.push({ id: child.key, ...child.val() });
-        });
-        chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-
-        const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
-
-        filteredChats.forEach(chat => {
-            const btn = document.createElement('button');
-            btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
-            btn.onclick = () => {
-                if (currentChatId !== chat.id) {
-                    // Отключаем старый слушатель
-                    if (activeChatListener) {
-                        off(activeChatListener);
-                        activeChatListener = null;
-                    }
-                    currentChatId = chat.id;
-                    isFirstMessage = false;
-                    
-                    // Очищаем контейнер
-                    messagesContainer.innerHTML = '';
-                    
-                    // Подписываемся на чат
-                    listenToChat(chat.id);
-                    loadChatHistory(filter);
-                }
-                if (window.innerWidth < 1024) toggleDrawer();
+            const userMsg = {
+                sender: 'user',
+                text: text,
+                attachments: attachmentsData,
+                timestamp: serverTimestamp(),
+                model: currentModel.id
             };
-            btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
-            container.appendChild(btn);
+            
+            await push(messagesRef, userMsg);
+
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            attachedFiles = [];
+            renderFilePreviews();
+
+            // --- ВЫЗОВ AI МОДЕЛИ ---
+            try {
+                let aiResponse = await callAIModel(text, currentModel.id);
+                
+                // Если API не ответил или ответ пустой - используем fallback
+                if (!aiResponse) {
+                    const fallbackResponses = [
+                        `I've analyzed your input using the ${currentModel.name} parameters. How should we proceed with this data?`,
+                        `The Obsidian Core has processed that request. Insights are ready for deployment.`,
+                        `Confirmed. I'm cross-referencing your query with the latest dataset.`,
+                        `Intriguing perspective. I'm calculating the potential outcomes based on your instructions.`
+                    ];
+                    aiResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+                }
+                
+                // Убираем повторение ввода из ответа
+                if (aiResponse.startsWith(text)) {
+                    aiResponse = aiResponse.substring(text.length).trim();
+                }
+                
+                const aiMsg = {
+                    sender: 'ai',
+                    text: `Core Response [${currentModel.name}]: ${aiResponse}`,
+                    timestamp: serverTimestamp()
+                };
+                
+                await push(messagesRef, aiMsg);
+                
+            } catch (error) {
+                console.error('Error in AI processing:', error);
+                const aiMsg = {
+                    sender: 'ai',
+                    text: `Core Response [${currentModel.name}]: I'm having trouble processing your request. Please try again.`,
+                    timestamp: serverTimestamp()
+                };
+                await push(messagesRef, aiMsg);
+            }
+        }
+
+        sendBtn.onclick = sendMessage;
+        messageInput.addEventListener('keydown', (e) => { 
+            if(e.key === 'Enter' && !e.shiftKey) { 
+                e.preventDefault(); 
+                sendMessage(); 
+            } 
         });
-    });
-}
 
-window.toggleDrawer = () => {
-    const drawer = document.getElementById('side-drawer');
-    const overlay = document.getElementById('drawer-overlay');
-    const isOpen = !drawer.classList.contains('-translate-x-full');
-    if (isOpen) {
-        drawer.classList.add('-translate-x-full');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-    } else {
-        drawer.classList.remove('-translate-x-full');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-    }
-};
+        document.querySelectorAll('.sample-prompt').forEach(btn => {
+            btn.onclick = () => {
+                messageInput.value = btn.textContent;
+                messageInput.style.height = 'auto';
+                messageInput.style.height = messageInput.scrollHeight + 'px';
+            };
+        });
 
-messageInput.oninput = function() {
-    this.style.height = 'auto';
-    const newHeight = Math.min(this.scrollHeight, 200);
-    this.style.height = newHeight + 'px';
-};
+        function listenToChat(chatId) {
+            if (activeChatListener) {
+                off(activeChatListener);
+                activeChatListener = null;
+            }
+            
+            const path = `users/${currentUserId}/chats/${chatId}/messages`;
+            const messagesRef = ref(db, path);
+            activeChatListener = messagesRef;
+            
+            onValue(messagesRef, (snapshot) => {
+                if (chatId !== currentChatId) return;
+                
+                const messages = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((child) => {
+                        messages.push({ id: child.key, ...child.val() });
+                    });
+                }
+                
+                if (messages.length === 0) {
+                    const welcome = document.getElementById('welcome-state');
+                    if (welcome) {
+                        messagesContainer.innerHTML = '';
+                        messagesContainer.appendChild(welcome);
+                        welcome.style.display = 'block';
+                    }
+                    isFirstMessage = true;
+                    return;
+                }
+                
+                messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+                
+                const currentMessages = messagesContainer.querySelectorAll('[data-msg-id]');
+                const currentIds = new Set();
+                currentMessages.forEach(el => currentIds.add(el.dataset.msgId));
+                
+                const welcome = document.getElementById('welcome-state');
+                if (welcome) welcome.style.display = 'none';
+                
+                messages.forEach(msg => {
+                    if (msg.id && !currentIds.has(msg.id)) {
+                        appendMessageUI(msg);
+                    }
+                });
+                
+                messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+            });
+        }
+
+        function appendMessageUI(msg) {
+            const isUser = msg.sender === 'user';
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300 mb-stack-md`;
+            wrapper.dataset.msgId = msg.id || 'temp_' + Date.now() + '_' + Math.random();
+            
+            const inner = document.createElement('div');
+            inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
+            
+            if (!isUser) {
+                const header = document.createElement('div');
+                header.className = 'flex items-center gap-2 mb-2';
+                header.innerHTML = `
+                    <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
+                `;
+                inner.appendChild(header);
+            }
+            
+            if (msg.text) {
+                const p = document.createElement('p');
+                p.className = 'font-body-md leading-relaxed whitespace-pre-wrap text-on-surface';
+                p.textContent = msg.text;
+                inner.appendChild(p);
+            }
+
+            if (msg.attachments && msg.attachments.length > 0) {
+                const attContainer = document.createElement('div');
+                attContainer.className = "mt-3 space-y-2";
+                msg.attachments.forEach(att => {
+                    const isImg = att.type && att.type.startsWith('image/');
+                    const div = document.createElement('div');
+                    div.className = "flex flex-col gap-2";
+                    if (isImg) {
+                        const img = document.createElement('img');
+                        img.src = att.data;
+                        img.className = "max-w-full rounded-lg border border-white/10 shadow-sm";
+                        img.alt = "attachment";
+                        div.appendChild(img);
+                    }
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = "flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70";
+                    fileDiv.innerHTML = `
+                        <span class="material-symbols-outlined text-sm">attachment</span>
+                        <span class="truncate">${att.name}</span>
+                    `;
+                    div.appendChild(fileDiv);
+                    attContainer.appendChild(div);
+                });
+                inner.appendChild(attContainer);
+            }
+            
+            wrapper.appendChild(inner);
+            messagesContainer.appendChild(wrapper);
+            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+        }
+
+        // ============================================
+        // CHAT HISTORY
+        // ============================================
+        
+        const historySearch = document.getElementById('history-search');
+        historySearch.oninput = (e) => loadChatHistory(e.target.value);
+
+        function loadChatHistory(filter = '') {
+            const historyRef = ref(db, `users/${currentUserId}/chats`);
+            onValue(historyRef, (snapshot) => {
+                const container = document.getElementById('history-container');
+                container.innerHTML = '';
+                const chats = [];
+                snapshot.forEach((child) => {
+                    chats.push({ id: child.key, ...child.val() });
+                });
+                chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+                const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
+
+                filteredChats.forEach(chat => {
+                    const btn = document.createElement('button');
+                    btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
+                    btn.onclick = () => {
+                        if (currentChatId !== chat.id) {
+                            if (activeChatListener) {
+                                off(activeChatListener);
+                                activeChatListener = null;
+                            }
+                            currentChatId = chat.id;
+                            isFirstMessage = false;
+                            messagesContainer.innerHTML = '';
+                            listenToChat(chat.id);
+                            loadChatHistory(filter);
+                        }
+                        if (window.innerWidth < 1024) toggleDrawer();
+                    };
+                    btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
+                    container.appendChild(btn);
+                });
+            });
+        }
+
+        // ============================================
+        // DRAWER TOGGLE
+        // ============================================
+        
+        window.toggleDrawer = () => {
+            const drawer = document.getElementById('side-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = !drawer.classList.contains('-translate-x-full');
+            if (isOpen) {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        };
+
+        messageInput.oninput = function() {
+            this.style.height = 'auto';
+            const newHeight = Math.min(this.scrollHeight, 200);
+            this.style.height = newHeight + 'px';
+        };
     </script>
 </body></html>
