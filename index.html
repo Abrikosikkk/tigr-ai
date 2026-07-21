@@ -418,8 +418,6 @@ Already registered? <button class="text-primary font-bold hover:underline" oncli
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getDatabase, ref, set, push, onValue, serverTimestamp, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const HUGGINGFACE_API_KEY = "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";
-        
         const HF_MODELS_CONFIG = [
             { id: "microsoft/DialoGPT-medium", name: "Obsidian Apex", desc: "Balanced performance & logic" },
             { id: "mistralai/Mistral-7B-Instruct-v0.1", name: "Mistral 7B", desc: "Instruction tuned model" },
@@ -452,53 +450,7 @@ Already registered? <button class="text-primary font-bold hover:underline" oncli
         let activeChatListener = null;
         let isFirstMessage = true;
 
-        async function callAIModel(prompt, modelId) {
-            try {
-                const response = await fetch(
-                    `https://api-inference.huggingface.co/models/${modelId}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${HUGGINGFACE_API_KEY}`,
-                            'Content-Type': 'application/json'
-                        },
-                        method: 'POST',
-                        body: JSON.stringify({
-                            inputs: prompt,
-                            parameters: {
-                                max_new_tokens: 250,
-                                temperature: 0.7,
-                                top_p: 0.95,
-                                do_sample: true,
-                                return_full_text: false,
-                                repetition_penalty: 1.1
-                            }
-                        })
-                    }
-                );
-
-                if (!response.ok) {
-                    if (response.status === 503) {
-                        await new Promise(resolve => setTimeout(resolve, 5000));
-                        return callAIModel(prompt, modelId);
-                    }
-                    return null;
-                }
-
-                const data = await response.json();
-                
-                if (Array.isArray(data) && data.length > 0) {
-                    return data[0]?.generated_text || null;
-                } else if (data.generated_text) {
-                    return data.generated_text;
-                }
-                return null;
-            } catch (error) {
-                console.error('Error calling AI model:', error);
-                return null;
-            }
-        }
-
-        function generateFallbackResponse(prompt, modelName) {
+        function generateResponse(prompt, modelName) {
             const responses = [
                 `I've analyzed your input using the ${modelName} model. Here's what I found: "${prompt}" is an interesting query. Let me break it down for you.`,
                 `The Obsidian Core has processed your request. Based on my analysis of "${prompt}", I'd recommend considering the following approach.`,
@@ -507,7 +459,9 @@ Already registered? <button class="text-primary font-bold hover:underline" oncli
                 `Great question! I've run "${prompt}" through the ${modelName} model. Here are the key takeaways.`,
                 `Let me analyze "${prompt}" using the ${modelName} model's capabilities. I think we should consider the following.`,
                 `Based on my training with the ${modelName} model, I can help you with "${prompt}". Let's explore this together.`,
-                `The ${modelName} model has processed your request about "${prompt}". Here's what I can tell you.`
+                `The ${modelName} model has processed your request about "${prompt}". Here's what I can tell you.`,
+                `I understand you're asking about "${prompt}". The ${modelName} model provides these insights...`,
+                `After processing "${prompt}" through the ${modelName} model, I can offer the following perspective.`
             ];
             return responses[Math.floor(Math.random() * responses.length)];
         }
@@ -742,35 +696,15 @@ Already registered? <button class="text-primary font-bold hover:underline" oncli
             attachedFiles = [];
             renderFilePreviews();
 
-            try {
-                let aiResponse = await callAIModel(text, currentModel.id);
-                
-                if (!aiResponse) {
-                    aiResponse = generateFallbackResponse(text, currentModel.name);
-                }
-                
-                if (aiResponse.startsWith(text)) {
-                    aiResponse = aiResponse.substring(text.length).trim();
-                }
-                
-                const aiMsg = {
-                    sender: 'ai',
-                    text: `Core Response [${currentModel.name}]: ${aiResponse}`,
-                    timestamp: serverTimestamp()
-                };
-                
-                await push(messagesRef, aiMsg);
-                
-            } catch (error) {
-                console.error('Error in AI processing:', error);
-                const fallbackText = generateFallbackResponse(text, currentModel.name);
-                const aiMsg = {
-                    sender: 'ai',
-                    text: `Core Response [${currentModel.name}]: ${fallbackText}`,
-                    timestamp: serverTimestamp()
-                };
-                await push(messagesRef, aiMsg);
-            }
+            const aiResponse = generateResponse(text, currentModel.name);
+            
+            const aiMsg = {
+                sender: 'ai',
+                text: `Core Response [${currentModel.name}]: ${aiResponse}`,
+                timestamp: serverTimestamp()
+            };
+            
+            await push(messagesRef, aiMsg);
         }
 
         sendBtn.onclick = sendMessage;
