@@ -216,6 +216,10 @@
 </div>
 </div>
 <nav class="flex-1 space-y-1">
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 metallic-border mb-4 group" onclick="startNewChat()">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
+<span class="text-body-sm font-bold uppercase tracking-wider">New Chat</span>
+</button>
 <button class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 active-tab" data-tab="chat" onclick="switchTab('chat')">
 <span class="material-symbols-outlined">chat_bubble</span>
 <span class="text-body-sm">Chat</span>
@@ -267,7 +271,7 @@
 <!-- Input Area -->
 <div class="p-4 border-t border-white/10 bg-white/5 backdrop-blur-md">
 <div class="relative max-w-4xl mx-auto">
-<textarea class="w-full bg-surface-container-low border-none rounded-2xl px-6 py-4 pr-16 resize-none focus:ring-1 focus:ring-primary/20 text-body-md transition-all" id="chat-input" placeholder="Inquire the intelligence network..." rows="1"></textarea>
+<textarea class="w-full bg-surface-container-low border-none rounded-2xl px-6 py-4 pr-16 resize-none focus:ring-1 focus:ring-primary/20 text-body-md transition-all" id="chat-input" onkeydown="if(event.key==='Enter' &amp;&amp; !event.shiftKey){event.preventDefault(); sendMessage();}" placeholder="Inquire the intelligence network..." rows="1"></textarea>
 <button class="absolute right-3 bottom-3 w-10 h-10 rounded-xl metallic-button flex items-center justify-center" id="send-btn" onclick="sendMessage()">
 <span class="material-symbols-outlined">send</span>
 </button>
@@ -316,14 +320,23 @@
 </div>
 </section>
 <!-- ADMIN TAB -->
-<section class="tab-content hidden h-full px-gutter py-stack-lg" id="tab-admin">
+<section class="tab-content hidden h-full px-gutter py-stack-lg overflow-y-auto" id="tab-admin">
 <div class="max-w-4xl mx-auto space-y-stack-lg">
-<div class="flex justify-between items-end">
-<div>
+<div class="flex justify-between items-end gap-4">
+<div class="flex-1 space-y-4">
 <h2 class="text-headline-lg font-headline-lg text-primary">Command Center</h2>
-<p class="text-on-surface-variant text-body-sm">Resource management.</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-[10px] font-label-caps text-on-surface-variant">ACTIVATIONS</label>
+<input class="w-full bg-surface-container-low border-outline-variant/30 border rounded-xl px-4 py-2 text-primary" id="key-activations" placeholder="1" type="number" value="1"/>
 </div>
-<button class="metallic-button px-6 py-3 rounded-xl font-bold text-label-caps flex items-center gap-2" onclick="generateNewKey()">
+<div class="space-y-1">
+<label class="text-[10px] font-label-caps text-on-surface-variant">EXPIRY (DAYS)</label>
+<input class="w-full bg-surface-container-low border-outline-variant/30 border rounded-xl px-4 py-2 text-primary" id="key-expiry" placeholder="30" type="number" value="30"/>
+</div>
+</div>
+</div>
+<button class="metallic-button px-6 py-4 rounded-xl font-bold text-label-caps flex items-center gap-2 h-fit" onclick="generateNewKey()">
 <span class="material-symbols-outlined text-sm">key</span> GENERATE KEY
                         </button>
 </div>
@@ -332,7 +345,8 @@
 <thead>
 <tr class="bg-white/5 border-b border-white/10">
 <th class="p-4 font-label-caps text-on-surface-variant">Activation Key</th>
-<th class="p-4 font-label-caps text-on-surface-variant">Tier</th>
+<th class="p-4 font-label-caps text-on-surface-variant">Uses</th>
+<th class="p-4 font-label-caps text-on-surface-variant">Expires</th>
 <th class="p-4 font-label-caps text-on-surface-variant">Status</th>
 </tr>
 </thead>
@@ -347,13 +361,24 @@
 <section class="tab-content hidden h-full px-gutter py-stack-lg" id="tab-settings">
 <div class="max-w-2xl mx-auto space-y-stack-md">
 <h2 class="text-headline-lg font-headline-lg text-primary mb-stack-lg">User Parameters</h2>
-<div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
-<div>
-<p class="text-primary font-semibold">Identity Sync</p>
-<p class="text-on-surface-variant text-[12px]">Cloud persistence active</p>
+<div class="glass-panel p-6 rounded-2xl space-y-4">
+<div class="space-y-2">
+<label class="text-[10px] font-label-caps text-on-surface-variant">DISPLAY NAME</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-low border-outline-variant border rounded-xl px-4 py-3 text-primary focus:ring-1 focus:ring-primary/50 outline-none" id="settings-display-name" placeholder="Agent Nickname" type="text"/>
+<button class="metallic-button px-6 rounded-xl font-bold text-label-caps" onclick="updateDisplayName()">SAVE</button>
 </div>
-<div class="w-12 h-6 bg-primary rounded-full relative">
-<div class="absolute right-1 top-1 w-4 h-4 bg-surface rounded-full"></div>
+<p class="text-on-surface-variant text-[10px] opacity-60">Identity synchronization active via crystal cloud.</p>
+</div>
+<hr class="border-white/5"/>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-primary font-semibold">Latency Optimization</p>
+<p class="text-on-surface-variant text-[12px]">Reduce visual noise for speed</p>
+</div>
+<div class="w-12 h-6 bg-primary/20 rounded-full relative cursor-pointer">
+<div class="absolute left-1 top-1 w-4 h-4 bg-surface-container-highest rounded-full transition-all"></div>
+</div>
 </div>
 </div>
 <div class="pt-stack-lg">
@@ -404,7 +429,9 @@
         const db = firebase.database();
 
         let currentUser = null;
+        let currentChatId = null;
         let userData = {
+            displayName: "Agent",
             messageCount: 0,
             isPremium: false,
             isAdmin: false
@@ -439,12 +466,15 @@
         const updateUI = () => {
             if (!currentUser) return;
             
-            document.getElementById('user-display-name').textContent = currentUser.email.split('@')[0].toUpperCase();
+            const dName = userData.displayName || currentUser.email.split('@')[0].toUpperCase();
+            document.getElementById('user-display-name').textContent = dName;
+            document.getElementById('settings-display-name').value = dName;
             document.getElementById('sub-status-label').textContent = userData.isPremium ? 'Pupkin+ Agent' : 'Standard Node';
             
             if (userData.isAdmin) {
                 document.getElementById('admin-nav-item').classList.remove('hidden');
                 document.getElementById('admin-nav-item-mob').classList.remove('hidden');
+                loadAdminKeys();
             }
 
             const limit = userData.isPremium ? 1000 : 10;
@@ -462,8 +492,7 @@
             
             document.getElementById('auth-form').classList.add('hidden');
             document.getElementById('auth-loading').classList.remove('hidden');
-            document.getElementById('loading-text').textContent = type === 'login' ? 'Authenticating...' : 'Provisioning Identity...';
-
+            
             try {
                 if (type === 'signup') {
                     await auth.createUserWithEmailAndPassword(email, pass);
@@ -471,20 +500,24 @@
                     await auth.signInWithEmailAndPassword(email, pass);
                 }
             } catch (error) {
-                console.error("Auth Error:", error);
                 alert(error.message);
                 document.getElementById('auth-form').classList.remove('hidden');
                 document.getElementById('auth-loading').classList.add('hidden');
             }
         };
 
-        const handleLogout = () => {
-            auth.signOut().then(() => location.reload());
+        const handleLogout = () => auth.signOut().then(() => location.reload());
+
+        const updateDisplayName = () => {
+            const newName = document.getElementById('settings-display-name').value.trim();
+            if(!newName) return;
+            db.ref(`users/${currentUser.uid}/displayName`).set(newName)
+                .then(() => alert("Identity synced successfully."))
+                .catch(e => alert("Sync Error: " + e.message));
         };
 
         // Database Listeners
         auth.onAuthStateChanged(user => {
-            console.log("Auth State Changed:", user ? user.email : "Logged Out");
             if (user) {
                 currentUser = user;
                 const userRef = db.ref(`users/${user.uid}`);
@@ -492,22 +525,20 @@
                     const data = snapshot.val();
                     if (data) {
                         userData = { ...userData, ...data };
-                        console.log("User Data Updated:", userData);
                     } else {
-                        // Initialize first-time user data
                         const initialData = {
                             messageCount: 0,
-                            isPremium: emailIsAdmin(user.email), // Auto-premium for admin test accounts
-                            isAdmin: emailIsAdmin(user.email)
+                            isPremium: emailIsAdmin(user.email),
+                            isAdmin: emailIsAdmin(user.email),
+                            displayName: user.email.split('@')[0].toUpperCase()
                         };
                         userRef.set(initialData);
                         userData = initialData;
                     }
                     updateUI();
+                    if(!currentChatId) startNewChat(false);
                     document.getElementById('auth-overlay').classList.add('hidden');
                     document.getElementById('app-container').classList.remove('hidden');
-                }, error => {
-                    console.error("Database Subscription Error:", error);
                 });
             } else {
                 document.getElementById('auth-overlay').classList.remove('hidden');
@@ -517,32 +548,80 @@
 
         const emailIsAdmin = (email) => email.toLowerCase().includes('admin');
 
-        // Chat Logic
+        // Chat Persistence Logic
+        const startNewChat = (shouldClearUI = true) => {
+            currentChatId = 'chat_' + Date.now();
+            if(shouldClearUI) {
+                const chatLog = document.getElementById('chat-messages');
+                chatLog.innerHTML = `
+                    <div class="flex gap-4 max-w-[80%]">
+                        <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-primary text-sm">blur_on</span>
+                        </div>
+                        <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface">
+                            Session reset. Awaiting instructions.
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
+        const loadChatHistory = (chatId) => {
+            if(!currentUser) return;
+            db.ref(`chats/${currentUser.uid}/${chatId}`).once('value', snapshot => {
+                const messages = snapshot.val();
+                if(messages) {
+                    const chatLog = document.getElementById('chat-messages');
+                    chatLog.innerHTML = '';
+                    Object.values(messages).forEach(msg => {
+                        appendMessageToUI(msg.role, msg.content);
+                    });
+                }
+            });
+        };
+
+        const appendMessageToUI = (role, content) => {
+            const chatLog = document.getElementById('chat-messages');
+            const isUser = role === 'user';
+            const html = isUser ? `
+                <div class="flex gap-4 max-w-[80%] ml-auto justify-end">
+                    <div class="bg-primary text-background rounded-2xl rounded-tr-none p-4 text-body-sm font-medium">
+                        ${content}
+                    </div>
+                </div>
+            ` : `
+                <div class="flex gap-4 max-w-[80%]">
+                    <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-sm">blur_on</span>
+                    </div>
+                    <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            chatLog.insertAdjacentHTML('beforeend', html);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        };
+
         const sendMessage = async () => {
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
-            if(!text) return;
+            if(!text || !currentUser) return;
 
             if(!userData.isPremium && userData.messageCount >= 10) {
-                alert("Quota exceeded (10/10). Please elevate to Pupkin+ for continued intelligence stream.");
+                alert("Quota exceeded (10/10). Please elevate to Pupkin+.");
                 switchTab('subscription');
                 return;
             }
 
-            const chatLog = document.getElementById('chat-messages');
-            chatLog.innerHTML += `
-                <div class="flex gap-4 max-w-[80%] ml-auto justify-end">
-                    <div class="bg-primary text-background rounded-2xl rounded-tr-none p-4 text-body-sm font-medium">
-                        ${text}
-                    </div>
-                </div>
-            `;
-            
+            appendMessageToUI('user', text);
+            db.ref(`chats/${currentUser.uid}/${currentChatId}`).push({ role: 'user', content: text, timestamp: Date.now() });
+
             input.value = '';
             input.style.height = 'auto';
             
-            const loadingId = 'msg-' + Date.now();
-            chatLog.innerHTML += `
+            const loadingId = 'loading-' + Date.now();
+            document.getElementById('chat-messages').insertAdjacentHTML('beforeend', `
                 <div id="${loadingId}" class="flex gap-4 max-w-[80%]">
                     <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
                         <span class="material-symbols-outlined text-primary text-sm animate-pulse">blur_on</span>
@@ -551,8 +630,7 @@
                         Accessing latent space...
                     </div>
                 </div>
-            `;
-            chatLog.scrollTop = chatLog.scrollHeight;
+            `);
 
             try {
                 const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -572,66 +650,76 @@
                     })
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(`Groq API Error: ${errorData.error?.message || response.statusText}`);
-                }
+                if (!response.ok) throw new Error("API Uplink Failed");
 
                 const data = await response.json();
                 const reply = data.choices[0].message.content;
                 
-                document.getElementById(loadingId).innerHTML = `
-                    <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-primary text-sm">blur_on</span>
-                    </div>
-                    <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface">
-                        ${reply}
-                    </div>
-                `;
-
-                // Update message count in Firebase
-                userData.messageCount++;
-                db.ref(`users/${currentUser.uid}/messageCount`).set(userData.messageCount)
-                    .catch(e => console.error("Firebase Update Error:", e));
+                document.getElementById(loadingId).remove();
+                appendMessageToUI('assistant', reply);
+                
+                db.ref(`chats/${currentUser.uid}/${currentChatId}`).push({ role: 'assistant', content: reply, timestamp: Date.now() });
+                db.ref(`users/${currentUser.uid}/messageCount`).set(userData.messageCount + 1);
 
             } catch (err) {
-                console.error("Chat Error:", err);
-                document.getElementById(loadingId).innerHTML = `
-                    <div class="w-8 h-8 rounded-lg bg-error/20 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-error text-sm">error</span>
-                    </div>
-                    <div class="bg-error/10 border border-error/20 rounded-2xl rounded-tl-none p-4 text-body-sm text-error">
-                        Connection Fault: ${err.message}. Please verify your uplink.
-                    </div>
-                `;
+                document.getElementById(loadingId).innerHTML = `<div class="bg-error/10 border border-error/20 rounded-2xl p-4 text-error text-body-sm">Sync Error: ${err.message}</div>`;
             }
-            chatLog.scrollTop = chatLog.scrollHeight;
         };
 
-        const activateKey = () => {
-            const key = document.getElementById('activation-key').value.trim();
-            if(key.length > 8) {
-                db.ref(`users/${currentUser.uid}/isPremium`).set(true)
-                    .then(() => {
-                        alert("Crystal network synced. Pupkin+ capabilities active.");
-                        switchTab('chat');
-                    })
-                    .catch(e => alert("Sync Error: " + e.message));
-            } else {
-                alert("Invalid authentication key format.");
-            }
+        // Keys Logic
+        const loadAdminKeys = () => {
+            db.ref('keys').on('value', snapshot => {
+                const keys = snapshot.val();
+                const list = document.getElementById('admin-keys-list');
+                list.innerHTML = '';
+                if(keys) {
+                    Object.entries(keys).reverse().forEach(([id, k]) => {
+                        list.innerHTML += `
+                            <tr class="hover:bg-white/5 transition-colors border-b border-white/5">
+                                <td class="p-4 font-label-mono text-primary">${id}</td>
+                                <td class="p-4 text-body-sm">${k.activations}</td>
+                                <td class="p-4 text-body-sm">${new Date(k.expiry).toLocaleDateString()}</td>
+                                <td class="p-4"><span class="px-2 py-0.5 rounded-full ${k.activations > 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'} text-[10px] font-label-caps">${k.activations > 0 ? 'ACTIVE' : 'DEPLETED'}</span></td>
+                            </tr>
+                        `;
+                    });
+                }
+            });
         };
 
         const generateNewKey = () => {
             const key = Array.from({length: 4}, () => Math.random().toString(36).substring(2, 6).toUpperCase()).join('-');
-            const list = document.getElementById('admin-keys-list');
-            list.innerHTML = `
-                <tr class="hover:bg-white/5 transition-colors">
-                    <td class="p-4 font-label-mono text-primary">${key}</td>
-                    <td class="p-4 text-body-sm">Pupkin+</td>
-                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-label-caps">ISSUED</span></td>
-                </tr>
-            ` + list.innerHTML;
+            const activations = parseInt(document.getElementById('key-activations').value) || 1;
+            const days = parseInt(document.getElementById('key-expiry').value) || 30;
+            const expiryDate = Date.now() + (days * 24 * 60 * 60 * 1000);
+
+            db.ref(`keys/${key}`).set({
+                activations: activations,
+                expiry: expiryDate,
+                createdAt: Date.now()
+            }).then(() => {
+                alert("New key issued: " + key);
+            });
+        };
+
+        const activateKey = () => {
+            const keyId = document.getElementById('activation-key').value.trim();
+            if(!keyId) return;
+
+            db.ref(`keys/${keyId}`).once('value', snapshot => {
+                const keyData = snapshot.val();
+                if(keyData && keyData.activations > 0 && keyData.expiry > Date.now()) {
+                    // Valid key
+                    db.ref(`keys/${keyId}/activations`).set(keyData.activations - 1)
+                        .then(() => db.ref(`users/${currentUser.uid}/isPremium`).set(true))
+                        .then(() => {
+                            alert("Crystal network synced. Pupkin+ capabilities active.");
+                            switchTab('chat');
+                        });
+                } else {
+                    alert("Authentication key invalid, expired, or depleted.");
+                }
+            });
         };
 
         // Textarea auto-resize
@@ -646,6 +734,8 @@
         window.switchTab = switchTab;
         window.activateKey = activateKey;
         window.generateNewKey = generateNewKey;
+        window.startNewChat = startNewChat;
+        window.updateDisplayName = updateDisplayName;
 
     </script>
 </body></html>
