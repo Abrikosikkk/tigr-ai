@@ -3,9 +3,12 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Tigr AI - Obsidian Core</title>
+<title>PUPKIN STUDIO</title>
+<!-- Tailwind and Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@100;400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -13,53 +16,53 @@
             theme: {
                 extend: {
                     "colors": {
-                        "primary-container": "#ff8c00",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-primary-fixed": "#2f1500",
-                        "on-primary-container": "#623200",
-                        "inverse-primary": "#904d00",
-                        "tertiary": "#b7c8e1",
-                        "secondary-fixed-dim": "#fbbc00",
-                        "surface-container-highest": "#353534",
-                        "secondary-container": "#ffbf00",
-                        "primary-fixed-dim": "#ffb77d",
-                        "on-primary-fixed-variant": "#6e3900",
-                        "tertiary-fixed-dim": "#b7c8e1",
-                        "surface-tint": "#ffb77d",
-                        "on-surface": "#e5e2e1",
-                        "tertiary-fixed": "#d3e4fe",
-                        "tertiary-container": "#9babc4",
-                        "surface-dim": "#131313",
-                        "error-container": "#93000a",
-                        "on-secondary-fixed": "#261a00",
-                        "surface-container-high": "#2a2a2a",
-                        "primary-fixed": "#ffdcc3",
-                        "outline": "#a48c7a",
-                        "background": "#0A0A0A",
-                        "on-secondary-container": "#6d5000",
-                        "on-error": "#690005",
-                        "surface-container": "#201f1f",
-                        "surface-bright": "#3a3939",
-                        "surface": "#131313",
-                        "primary": "#ffb77d",
-                        "on-secondary": "#402d00",
+                        "surface-container-highest": "#2d3449",
+                        "outline-variant": "#44474a",
+                        "on-surface-variant": "#c5c6cb",
+                        "secondary": "#b9c8de",
+                        "surface": "#0b1326",
+                        "on-tertiary-container": "#776300",
+                        "on-primary-fixed": "#161c22",
+                        "on-tertiary": "#3a3000",
+                        "inverse-primary": "#595f66",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "surface-bright": "#31394d",
+                        "surface-tint": "#c1c7cf",
+                        "secondary-fixed": "#d4e4fa",
+                        "surface-dim": "#0b1326",
                         "on-error-container": "#ffdad6",
-                        "on-primary": "#4d2600",
-                        "inverse-on-surface": "#313030",
-                        "surface-variant": "#353534",
-                        "secondary": "#ffe2ab",
-                        "outline-variant": "#564334",
-                        "secondary-fixed": "#ffdfa0",
-                        "inverse-surface": "#e5e2e1",
-                        "on-tertiary-container": "#304054",
-                        "surface-container-low": "#1c1b1b",
-                        "on-tertiary-fixed-variant": "#38485d",
-                        "on-tertiary-fixed": "#0b1c30",
-                        "on-background": "#e5e2e1",
-                        "on-surface-variant": "#ddc1ae",
-                        "on-secondary-fixed-variant": "#5c4300",
+                        "on-surface": "#dae2fd",
+                        "primary-container": "#dde3eb",
+                        "surface-variant": "#2d3449",
+                        "primary-fixed": "#dde3eb",
+                        "surface-container-high": "#222a3d",
+                        "primary-fixed-dim": "#c1c7cf",
+                        "on-background": "#dae2fd",
+                        "on-primary": "#2b3137",
+                        "inverse-surface": "#dae2fd",
+                        "secondary-fixed-dim": "#b9c8de",
+                        "primary": "#ffffff",
+                        "on-secondary-container": "#a7b6cc",
+                        "background": "#0b1326",
+                        "on-tertiary-fixed": "#221b00",
+                        "tertiary-container": "#ffe16d",
+                        "on-secondary-fixed-variant": "#39485a",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#41474e",
+                        "on-error": "#690005",
+                        "on-secondary": "#233143",
+                        "on-primary-container": "#5f656c",
+                        "outline": "#8e9195",
                         "error": "#ffb4ab",
-                        "on-tertiary": "#213145"
+                        "surface-container-lowest": "#060e20",
+                        "tertiary": "#ffffff",
+                        "surface-container": "#171f33",
+                        "inverse-on-surface": "#283044",
+                        "secondary-container": "#39485a",
+                        "surface-container-low": "#131b2e",
+                        "on-secondary-fixed": "#0d1c2d",
+                        "tertiary-fixed": "#ffe16d",
+                        "tertiary-fixed-dim": "#e9c400"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
@@ -68,367 +71,319 @@
                         "full": "9999px"
                     },
                     "spacing": {
-                        "unit": "4px",
-                        "gutter": "16px",
-                        "stack-lg": "24px",
-                        "container-padding": "20px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
                         "stack-sm": "8px",
-                        "stack-md": "16px"
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px",
+                        "unit": "4px"
                     },
                     "fontFamily": {
-                        "headline-lg": ["Montserrat"],
-                        "body-md": ["Inter"],
-                        "display-lg": ["Montserrat"],
-                        "label-md": ["Inter"],
-                        "headline-lg-mobile": ["Montserrat"],
-                        "label-sm": ["Inter"],
-                        "body-xl": ["Inter"]
+                        "label-caps": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Geist"],
+                        "headline-xl": ["Manrope"],
+                        "body-sm": ["Geist"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Manrope"]
                     },
                     "fontSize": {
+                        "label-caps": ["11px", {"lineHeight": "12px", "letterSpacing": "0.1em", "fontWeight": "700"}],
                         "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
                         "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                        "body-xl": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
                     }
                 },
             },
         }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .glass {
+        .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .ai-glow {
-            border-left: 2px solid #ff8c00;
-            background: linear-gradient(90deg, rgba(255, 140, 0, 0.05) 0%, transparent 100%);
-            box-shadow: inset 20px 0 30px -20px rgba(255, 140, 0, 0.1);
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
-
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+        .metallic-button {
+            background: linear-gradient(135deg, #ffffff 0%, #a7b6cc 100%);
+            color: #0b1326;
+            transition: all 0.3s ease;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
+        .metallic-button:hover:not(:disabled) {
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            transform: translateY(-1px);
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 140, 0, 0.3);
-            border-radius: 10px;
+        .metallic-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
-
-        @keyframes pulse-ring {
-            0% { transform: scale(.8); opacity: 0.5; }
-            50% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(.8); opacity: 0.5; }
+        .metallic-border {
+            border: 1px solid transparent;
+            background: linear-gradient(#0b1326, #0b1326) padding-box,
+                        linear-gradient(135deg, #ffffff 0%, #39485a 100%) border-box;
         }
-        .ai-pulse {
-            animation: pulse-ring 2s infinite ease-in-out;
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
         }
-
-        .pulse-orb {
-            animation: orb-pulse 4s ease-in-out infinite;
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
-
-        @keyframes orb-pulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; filter: blur(40px); }
-            50% { transform: scale(1.2); opacity: 0.6; filter: blur(60px); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .active-tab {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left: 4px solid white;
         }
-
-        .hidden-view {
-            display: none !important;
-            opacity: 0;
-            pointer-events: none;
+        body {
+            min-height: max(884px, 100dvh);
         }
-
-        .active-view {
-            display: flex !important;
-            opacity: 1;
-        }
-
-        #side-drawer {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .chat-bubble-user {
-            border-radius: 1rem 1rem 0 1rem;
-        }
-        .chat-bubble-ai {
-            border-radius: 1rem 1rem 1rem 0;
-        }
-
-        .light .glass {
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .light {
-            --background: #fdfdfd;
-            --on-background: #131313;
-            --surface: #ffffff;
-            --surface-container-low: #f4f4f4;
-            --surface-container-lowest: #ffffff;
-        }
-        .light body {
-            background-color: #fdfdfd;
-            color: #131313;
-        }
-        .light .bg-background { background-color: #fdfdfd; }
-        .light .bg-surface-container-low { background-color: #f4f4f4; }
-        .light .text-on-surface { color: #131313; }
-        .light .text-on-surface-variant { color: #444444; }
     </style>
 </head>
-<body class="bg-background text-on-background font-body-md selection:bg-primary/30 h-screen overflow-hidden transition-colors duration-300">
-
-<div class="active-view min-h-screen flex items-center justify-center p-container-padding relative z-[100] bg-background" id="auth-view">
-<div class="fixed inset-0 overflow-hidden pointer-events-none">
-<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary-container/10 rounded-full pulse-orb"></div>
-<div class="absolute -bottom-[10%] -right-[10%] w-[50%] h-[50%] bg-secondary-container/5 rounded-full pulse-orb" style="animation-delay: -2s;"></div>
-</div>
-<main class="w-full max-w-md z-10">
-<div class="flex flex-col items-center mb-stack-lg">
-<img alt="Tigr AI Logo" class="w-24 h-24 mb-stack-md drop-shadow-2xl rounded-2xl" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
-<h1 class="font-display-lg text-headline-lg text-on-surface tracking-tighter">Tigr AI</h1>
-<p class="font-label-md text-on-surface-variant opacity-70">Access the Obsidian Core</p>
-</div>
-<div class="glass rounded-xl p-stack-lg relative overflow-hidden shadow-[0_0_40px_rgba(255,140,0,0.15)]">
-<section id="login-section">
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- Auth Overlay -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background" id="auth-overlay">
+<div class="glass-modal w-full max-w-[440px] rounded-2xl p-stack-lg relative overflow-hidden">
 <div class="mb-stack-lg text-center">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-1">Welcome Back</h2>
-<p class="font-label-sm text-on-surface-variant">Secure authentication required</p>
+<h1 class="text-headline-xl font-headline-xl text-primary tracking-tighter mb-1">PUPKIN STUDIO</h1>
+<p class="text-on-surface-variant font-label-caps">LUSTROUS INTELLIGENCE</p>
 </div>
-<form class="space-y-stack-md" id="login-form">
-<div class="relative">
-<label class="block font-label-sm text-on-surface-variant mb-2 ml-1 uppercase tracking-widest">Identifier</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">alternate_email</span>
-<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg py-4 pl-12 pr-4 text-on-surface font-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/30" id="login-email" placeholder="agent@tigr.ai" required="" type="email"/>
+<div class="space-y-stack-md" id="auth-form">
+<div class="space-y-stack-sm">
+<label class="block text-label-caps text-on-surface-variant ml-1">Identity Access</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-xl text-primary focus:ring-primary focus:border-primary px-4 py-3 metallic-border outline-none transition-all" id="auth-email" placeholder="agent@pupkin.studio" type="email"/>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-xl text-primary focus:ring-primary focus:border-primary px-4 py-3 metallic-border outline-none transition-all" id="auth-password" placeholder="••••••••" type="password"/>
 </div>
+<div class="flex flex-col gap-3">
+<button class="metallic-button w-full py-4 rounded-xl font-bold uppercase tracking-widest text-label-caps" onclick="handleAuth('login')">Initialize Session</button>
+<button class="text-on-surface-variant text-body-sm hover:text-primary transition-colors text-center" onclick="handleAuth('signup')">Request Access</button>
 </div>
-<div class="relative">
-<label class="block font-label-sm text-on-surface-variant mb-2 ml-1 uppercase tracking-widest">Encryption Key</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">lock</span>
-<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg py-4 pl-12 pr-4 text-on-surface font-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/30" id="login-password" placeholder="••••••••••••" required="" type="password"/>
-</div>
-<div class="flex justify-end mt-2">
-<button class="font-label-sm text-primary hover:text-secondary-fixed transition-colors" type="button">Forgot Key?</button>
+<div class="text-center">
+<span class="text-outline-variant text-[10px]">v2.4.0-CRYSTAL</span>
 </div>
 </div>
-<button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
-<span class="material-symbols-outlined">login</span> SIGN IN
-</button>
-</form>
-<div class="relative my-stack-lg flex items-center">
-<div class="flex-grow border-t border-white/10"></div>
-<span class="px-4 font-label-sm text-on-surface-variant/50">OR SECURE CONNECT</span>
-<div class="flex-grow border-t border-white/10"></div>
-</div>
-<button class="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 py-3 rounded-lg font-label-md hover:bg-white/10 transition-colors" id="google-signin">
-<svg class="w-5 h-5" viewbox="0 0 24 24"><path d="M12 5.04c1.64 0 3.12.56 4.28 1.67l3.2-3.2C17.52 1.64 14.97 1 12 1 7.73 1 4.12 3.44 2.37 7.02l3.77 2.92C7.02 7.04 9.3 5.04 12 5.04z" fill="#EA4335"></path><path d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-1.99 3.41-4.91 3.41-8.7z" fill="#4285F4"></path><path d="M5.93 14.9c-.24-.72-.37-1.5-.37-2.3s.13-1.58.37-2.3L2.16 7.38C1.4 8.78 1 10.34 1 12c0 1.66.4 3.22 1.16 4.62l3.77-2.72z" fill="#FBBC05"></path><path d="M12 23c2.97 0 5.48-.98 7.31-2.67l-3.71-2.88c-1.01.67-2.31 1.07-3.6 1.07-2.7 0-4.98-2-5.81-4.69l-3.77 2.92C4.12 20.56 7.73 23 12 23z" fill="#34A853"></path></svg>
-Google Authorization
-</button>
-<p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-New to the network? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('signup')">Register Identity</button>
-</p>
-</section>
-<section class="hidden-view" id="signup-section">
-<div class="mb-stack-lg text-center">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-1">New Node Registration</h2>
-<p class="font-label-sm text-on-surface-variant">Initialize your encrypted profile</p>
-</div>
-<form class="space-y-stack-md" id="signup-form">
-<div class="relative">
-<label class="block font-label-sm text-on-surface-variant mb-2 ml-1 uppercase tracking-widest">Full Name</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">person</span>
-<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg py-4 pl-12 pr-4 text-on-surface font-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/30" id="signup-name" placeholder="Apex Predator" required="" type="text"/>
+<div class="hidden flex-col items-center justify-center py-stack-lg" id="auth-loading">
+<div class="w-12 h-12 border-4 border-t-primary border-outline-variant rounded-full animate-spin"></div>
+<p class="mt-stack-md text-label-caps text-on-surface-variant animate-pulse" id="loading-text">Authenticating...</p>
 </div>
 </div>
-<div class="relative">
-<label class="block font-label-sm text-on-surface-variant mb-2 ml-1 uppercase tracking-widest">Identifier</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">alternate_email</span>
-<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg py-4 pl-12 pr-4 text-on-surface font-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/30" id="signup-email" placeholder="agent@tigr.ai" required="" type="email"/>
 </div>
-</div>
-<div class="relative">
-<label class="block font-label-sm text-on-surface-variant mb-2 ml-1 uppercase tracking-widest">Encryption Key</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">lock</span>
-<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg py-4 pl-12 pr-4 text-on-surface font-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/30" id="signup-password" minlength="12" placeholder="Minimum 12 characters" required="" type="password"/>
-</div>
-</div>
-<button class="w-full bg-primary-container text-on-primary py-4 rounded-lg font-label-md shadow-lg shadow-primary-container/20 active:scale-95 transition-all hover:brightness-110 flex items-center justify-center gap-2" type="submit">
-<span class="material-symbols-outlined">how_to_reg</span> SIGN UP
-</button>
-</form>
-<p class="mt-stack-lg text-center font-label-md text-on-surface-variant">
-Already registered? <button class="text-primary font-bold hover:underline" onclick="toggleAuthForms('login')">Access Core</button>
-</p>
-</section>
-</div>
-</main>
-</div>
-
-<div class="hidden-view h-screen flex overflow-hidden w-full bg-background" id="chat-view">
-<aside class="fixed inset-y-0 left-0 z-[60] -translate-x-full lg:translate-x-0 h-full w-72 bg-surface-container-low/95 backdrop-blur-2xl border-r border-white/5 shadow-2xl flex flex-col py-stack-lg" id="side-drawer">
-<div class="px-6 pb-6 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Tigr AI" class="w-10 h-10 rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
-<span class="font-display-lg text-headline-lg-mobile text-primary tracking-tighter">Tigr AI</span>
-</div>
-<button class="lg:hidden text-on-surface-variant" onclick="toggleDrawer()">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<div class="px-4 space-y-4 mb-4">
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 text-sm">search</span>
-<input class="w-full bg-surface-container-lowest/50 border border-white/5 rounded-lg pl-9 pr-4 py-2 text-label-md text-on-surface focus:border-primary/50 outline-none transition-all" id="history-search" placeholder="Search chats..." type="text"/>
-</div>
-<button class="w-full bg-secondary-container text-on-secondary-container rounded-lg px-4 py-3 font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform" id="new-chat-btn">
-<span class="material-symbols-outlined">add_circle</span> New Chat
-</button>
-</div>
-<nav class="flex-1 px-2 overflow-y-auto custom-scrollbar" id="chat-history-list">
-<p class="px-4 py-2 text-label-sm uppercase opacity-40 font-bold tracking-widest">Recent Chats</p>
-<div class="space-y-1 mt-2" id="history-container"></div>
-</nav>
-<div class="px-4 mt-auto space-y-2 pt-6 border-t border-white/5">
-<button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-primary px-4 py-3 font-label-md transition-colors" onclick="toggleSettingsModal()">
-<span class="material-symbols-outlined">settings</span> Settings
-</button>
-<div class="flex items-center gap-4 px-2 py-2">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold uppercase" id="user-avatar">?</div>
-<div class="overflow-hidden">
-<p class="font-label-md text-on-surface truncate" id="user-display-name">Unknown Agent</p>
-<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Secure Profile</p>
-</div>
-</div>
-<button class="w-full flex items-center gap-3 text-on-surface-variant hover:text-error px-4 py-3 font-label-md transition-colors" id="sign-out-btn">
-<span class="material-symbols-outlined">logout</span> Sign Out
-</button>
-</div>
-</aside>
-<div class="fixed inset-0 bg-black/60 z-[55] opacity-0 pointer-events-none transition-opacity lg:hidden" id="drawer-overlay" onclick="toggleDrawer()"></div>
-<main class="flex-1 flex flex-col relative w-full lg:ml-72 h-full">
-<header class="bg-background/80 backdrop-blur-xl border-b border-white/10 h-16 flex items-center justify-between px-container-padding z-50">
-<div class="flex items-center gap-4">
-<button class="lg:hidden text-primary p-2" onclick="toggleDrawer()">
-<span class="material-symbols-outlined">menu</span>
-</button>
+<!-- Layout Container -->
+<div class="hidden h-screen w-full flex flex-col md:flex-row overflow-hidden relative" id="app-container">
+<!-- TopAppBar (Mobile) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 md:hidden bg-surface/30 backdrop-blur-xl border-b border-white/10 shadow-sm">
 <div class="flex items-center gap-2">
-<h1 class="font-display-lg text-headline-lg-mobile text-primary tracking-tighter sm:block hidden">Tigr AI</h1>
-<div class="relative group">
-<button class="bg-primary/10 border border-primary/20 rounded-full px-3 py-1 flex items-center gap-2 hover:bg-primary/20 transition-all" id="model-switcher-btn">
-<span class="w-2 h-2 rounded-full bg-primary ai-pulse"></span>
-<span class="text-[10px] font-bold text-primary uppercase tracking-tighter" id="current-model-display">Obsidian Apex</span>
-<span class="material-symbols-outlined text-[14px] text-primary">expand_more</span>
-</button>
-<div class="absolute top-full mt-2 left-0 w-56 glass bg-surface-container-high rounded-xl overflow-hidden shadow-2xl scale-95 opacity-0 pointer-events-none group-focus-within:scale-100 group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-all z-[70]" id="model-dropdown">
-<div class="p-2 space-y-1" id="model-list-container"></div>
+<span class="material-symbols-outlined text-primary">blur_on</span>
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile font-bold tracking-tighter text-primary">PUPKIN STUDIO</h2>
 </div>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('history-search').focus()"><span class="material-symbols-outlined">search</span></button>
-<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="toggleSettingsModal()"><span class="material-symbols-outlined">settings</span></button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Cd5JcZewdIr1oJbQHNHwW2A48gQm1vbJpsYbw1FyY2nJ3jcd6sUty1GFU7KXv6FwoEj4oynlZrLIgMVYmDlF7Gm2kjbReQ15iElccFQwEEP06J-eySWthpk6uj-N_D1gqgmyPy93xxTFlgYflVgVCRtBqt9qy2Sa3Nq9-eyjWlLINN2n05jVUZeBaH9YD8ud6BCdrFL2FJXMTL6jfPWadhbAoPh2HeIa4IiFeBtdkC7jlOEwC5px1aTiloROJw1a0vMiP3f48zI"/>
 </div>
 </header>
-<section class="flex-1 overflow-y-auto custom-scrollbar px-container-padding pt-10 pb-40 space-y-stack-lg max-w-4xl mx-auto w-full" id="messages-container">
-<div class="py-12 text-center space-y-6" id="welcome-state">
-<img alt="Tigr Logo" class="w-24 h-24 mx-auto rounded-2xl shadow-2xl opacity-50 grayscale" src="https://lh3.googleusercontent.com/aida/AP1WRLs5DhKePUI2rJB0K8arR2XGFNPc601UP_kK5CAeW0UfhIEUSZGhj0464s2XAoXPTA1p6wnW53Z2jwT-reoE6_vdtjYfNQ7VIj0FkONbw8bVOWV9zG9FGBafzKo860BMONTfeQOlt_O-jg4TpiRS4jHP9KzptpbDqZQszQbYRXfWPmpbIY3t5KMU3rMDvAUjDruy8F9PqwAfljiNAz2GjihG4PTCOQDOYC62lsa3O7AzV3ZsySB3Bc3xFMk"/>
-<h2 class="font-headline-lg text-on-surface opacity-90">How can I assist your workflow today?</h2>
-<div class="flex flex-wrap justify-center gap-2">
-<button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Analyze toxicity in text</button>
-<button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Review model metrics</button>
-<button class="glass px-4 py-2 rounded-full text-label-sm hover:border-primary/50 transition-all sample-prompt">Generate summary report</button>
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex flex-col h-full p-stack-md bg-surface/10 backdrop-blur-2xl border-r border-white/10 shadow-2xl h-screen w-72 left-0 top-0">
+<div class="flex items-center gap-3 mb-stack-lg px-2">
+<span class="material-symbols-outlined text-primary text-4xl">blur_on</span>
+<div class="flex flex-col">
+<span class="text-headline-lg font-headline-lg font-black text-primary leading-none">PUPKIN</span>
+<span class="text-label-caps text-on-surface-variant opacity-60">STUDIO</span>
+</div>
+</div>
+<div class="flex items-center gap-3 mb-stack-lg p-3 rounded-2xl glass-panel">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">person</span>
+</div>
+<div class="overflow-hidden">
+<p class="text-body-sm font-semibold text-primary truncate" id="user-display-name">Agent</p>
+<p class="text-[10px] text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span id="sub-status-label">Syncing...</span>
+</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<button class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 active-tab" data-tab="chat" onclick="switchTab('chat')">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-body-sm">Chat</span>
+</button>
+<button class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 text-on-surface-variant opacity-70" data-tab="subscription" onclick="switchTab('subscription')">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="text-body-sm">Subscription</span>
+</button>
+<button class="hidden nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 text-on-surface-variant opacity-70" data-tab="admin" id="admin-nav-item" onclick="switchTab('admin')">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="text-body-sm">Admin</span>
+</button>
+<button class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:bg-white/5 text-on-surface-variant opacity-70" data-tab="settings" onclick="switchTab('settings')">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-sm">Settings</span>
+</button>
+</nav>
+<div class="mt-auto p-4 rounded-xl bg-surface-container-low border border-white/5">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[10px] font-label-caps text-on-surface-variant">CRYSTAL USAGE</span>
+<span class="text-[10px] font-label-mono text-primary" id="usage-percent">0%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-500" id="usage-bar" style="width: 0%"></div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 relative mt-16 md:mt-0 overflow-y-auto">
+<!-- Background effects -->
+<div class="fixed inset-0 -z-10 bg-surface">
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-secondary/5 rounded-full blur-[100px]"></div>
+</div>
+<!-- CHAT TAB -->
+<section class="tab-content h-full flex flex-col max-w-container-max mx-auto px-gutter py-stack-md" id="tab-chat">
+<div class="flex-1 glass-panel rounded-2xl flex flex-col relative overflow-hidden">
+<!-- Message Log -->
+<div class="flex-1 overflow-y-auto p-stack-md space-y-4" id="chat-messages">
+<div class="flex gap-4 max-w-[80%]">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">blur_on</span>
+</div>
+<div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface">
+                                System initialized. Intelligence stream standby.
+                            </div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 border-t border-white/10 bg-white/5 backdrop-blur-md">
+<div class="relative max-w-4xl mx-auto">
+<textarea class="w-full bg-surface-container-low border-none rounded-2xl px-6 py-4 pr-16 resize-none focus:ring-1 focus:ring-primary/20 text-body-md transition-all" id="chat-input" placeholder="Inquire the intelligence network..." rows="1"></textarea>
+<button class="absolute right-3 bottom-3 w-10 h-10 rounded-xl metallic-button flex items-center justify-center" id="send-btn" onclick="sendMessage()">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="text-[10px] text-center mt-2 text-outline-variant uppercase tracking-widest">Pupkin-Llama3 Active</p>
 </div>
 </div>
 </section>
-<footer class="absolute bottom-0 left-0 right-0 bg-background/90 backdrop-blur-lg border-t border-white/10 p-4">
-<div class="max-w-4xl mx-auto relative space-y-2">
-<div class="hidden flex-wrap gap-2 px-2" id="file-preview-container"></div>
-<div class="flex items-end gap-3">
-<div class="flex-1 glass bg-surface-container-lowest/50 rounded-[28px] border-white/10 flex items-end p-2 focus-within:border-primary/40 transition-all">
-<button class="p-3 text-on-surface-variant hover:text-primary" id="attach-btn" title="Attach file">
-<span class="material-symbols-outlined">attach_file</span>
-</button>
-<input class="hidden" id="file-input" multiple="" type="file"/>
-<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-body-md py-3 custom-scrollbar resize-none placeholder:text-on-surface-variant/40" id="message-input" placeholder="Type a message..." rows="1"></textarea>
-<button class="p-3 text-on-surface-variant hover:text-primary" id="mic-btn"><span class="material-symbols-outlined">mic</span></button>
+<!-- SUBSCRIPTION TAB -->
+<section class="tab-content hidden h-full flex items-center justify-center px-gutter py-stack-lg" id="tab-subscription">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
+<!-- Free Tier -->
+<div class="glass-panel p-stack-lg rounded-3xl border-white/5 relative group overflow-hidden">
+<div class="mb-stack-lg">
+<h3 class="text-headline-lg font-headline-lg text-primary">Standard</h3>
+<p class="text-on-surface-variant text-body-sm">Basic intelligence access.</p>
 </div>
-<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:brightness-110 active:scale-90 transition-all disabled:opacity-50 disabled:grayscale" id="send-btn">
-<span class="material-symbols-outlined font-bold">arrow_upward</span>
-</button>
+<ul class="space-y-4 mb-stack-lg">
+<li class="flex items-center gap-3 text-body-sm"><span class="material-symbols-outlined text-emerald-400">check_circle</span> 10 messages total</li>
+<li class="flex items-center gap-3 text-body-sm"><span class="material-symbols-outlined text-emerald-400">check_circle</span> Standard latent speeds</li>
+</ul>
+<div class="p-4 rounded-xl bg-white/5 text-center text-label-caps text-on-surface-variant" id="tier-status-free">ACTIVE PROTOCOL</div>
 </div>
-<p class="text-center text-[9px] text-on-surface-variant opacity-40 uppercase tracking-widest">Tigr AI may produce inaccurate information.</p>
-</div>
-</footer>
-</main>
-</div>
-
-<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity" id="settings-modal">
-<div class="glass w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border-white/10">
-<div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-<h3 class="font-headline-lg-mobile text-primary">System Settings</h3>
-<button class="text-on-surface-variant hover:text-primary" onclick="toggleSettingsModal()">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<div class="p-6 space-y-6">
-<div class="flex items-center justify-between">
+<!-- Premium Tier -->
+<div class="glass-panel p-stack-lg rounded-3xl border-primary/20 relative group overflow-hidden">
+<div class="absolute inset-0 shimmer opacity-10"></div>
+<div class="flex justify-between items-start mb-stack-lg">
 <div>
-<p class="font-label-md text-on-surface">Interface Theme</p>
-<p class="text-xs text-on-surface-variant opacity-70">Toggle between dark and light modes</p>
+<h3 class="text-headline-lg font-headline-lg text-primary">Pupkin+</h3>
+<p class="text-on-surface-variant text-body-sm">Unrestricted capabilities.</p>
 </div>
-<button class="w-14 h-8 bg-surface-container-high rounded-full relative transition-colors border border-white/10" id="theme-toggle">
-<div class="absolute top-1 left-1 w-6 h-6 bg-primary rounded-full transition-all transform dark:translate-x-6" id="theme-knob"></div>
+<span class="px-3 py-1 rounded-full bg-white text-black font-label-caps text-[9px] animate-pulse">ELITE</span>
+</div>
+<ul class="space-y-4 mb-stack-lg">
+<li class="flex items-center gap-3 text-body-sm font-semibold"><span class="material-symbols-outlined text-primary">auto_awesome</span> Unlimited generation</li>
+<li class="flex items-center gap-3 text-body-sm"><span class="material-symbols-outlined text-primary">bolt</span> High-velocity inference</li>
+</ul>
+<div class="space-y-3">
+<div class="space-y-1">
+<label class="text-[10px] font-label-caps text-on-surface-variant">ACTIVATION KEY</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-primary font-label-mono placeholder:opacity-30" id="activation-key" placeholder="XXXX-XXXX-XXXX-XXXX" type="text"/>
+</div>
+<button class="metallic-button w-full py-4 rounded-xl font-bold uppercase tracking-widest text-label-caps" onclick="activateKey()">Elevate Access</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ADMIN TAB -->
+<section class="tab-content hidden h-full px-gutter py-stack-lg" id="tab-admin">
+<div class="max-w-4xl mx-auto space-y-stack-lg">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Command Center</h2>
+<p class="text-on-surface-variant text-body-sm">Resource management.</p>
+</div>
+<button class="metallic-button px-6 py-3 rounded-xl font-bold text-label-caps flex items-center gap-2" onclick="generateNewKey()">
+<span class="material-symbols-outlined text-sm">key</span> GENERATE KEY
+                        </button>
+</div>
+<div class="glass-panel rounded-2xl overflow-hidden">
+<table class="w-full text-left text-body-sm border-collapse">
+<thead>
+<tr class="bg-white/5 border-b border-white/10">
+<th class="p-4 font-label-caps text-on-surface-variant">Activation Key</th>
+<th class="p-4 font-label-caps text-on-surface-variant">Tier</th>
+<th class="p-4 font-label-caps text-on-surface-variant">Status</th>
+</tr>
+</thead>
+<tbody id="admin-keys-list">
+<!-- Dynamic Keys -->
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- SETTINGS TAB -->
+<section class="tab-content hidden h-full px-gutter py-stack-lg" id="tab-settings">
+<div class="max-w-2xl mx-auto space-y-stack-md">
+<h2 class="text-headline-lg font-headline-lg text-primary mb-stack-lg">User Parameters</h2>
+<div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
+<div>
+<p class="text-primary font-semibold">Identity Sync</p>
+<p class="text-on-surface-variant text-[12px]">Cloud persistence active</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative">
+<div class="absolute right-1 top-1 w-4 h-4 bg-surface rounded-full"></div>
+</div>
+</div>
+<div class="pt-stack-lg">
+<button class="w-full p-4 rounded-xl border border-error/30 text-error font-bold uppercase tracking-widest text-label-caps hover:bg-error/5 transition-all" onclick="handleLogout()">TERMINATE SESSION</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile pb-6 pt-2 bg-surface/20 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.4)] rounded-t-xl">
+<button class="flex flex-col items-center justify-center text-primary bg-white/10 rounded-xl px-4 py-1" data-tab-mob="chat" onclick="switchTab('chat')">
+<span class="material-symbols-outlined">bolt</span>
+<span class="text-label-caps">Chat</span>
 </button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/60" data-tab-mob="subscription" onclick="switchTab('subscription')">
+<span class="material-symbols-outlined">stars</span>
+<span class="text-label-caps">Plus</span>
+</button>
+<button class="hidden flex flex-col items-center justify-center text-on-surface-variant/60" data-tab-mob="admin" id="admin-nav-item-mob" onclick="switchTab('admin')">
+<span class="material-symbols-outlined">shield_person</span>
+<span class="text-label-caps">Admin</span>
+</button>
+</nav>
 </div>
-<div class="pt-4 border-t border-white/10">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-4">Core Metadata</p>
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-surface-container-low p-3 rounded-lg border border-white/5">
-<p class="text-[9px] text-on-surface-variant uppercase">Latency</p>
-<p class="font-mono text-primary">24ms</p>
-</div>
-<div class="bg-surface-container-low p-3 rounded-lg border border-white/5">
-<p class="text-[9px] text-on-surface-variant uppercase">Version</p>
-<p class="font-mono text-primary">v1.2.0-core</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getDatabase, ref, set, push, onValue, serverTimestamp, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        const HUGGINGFACE_API_KEY = "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";
-        
-        const HF_MODELS_CONFIG = [
-            { id: "microsoft/DialoGPT-medium", name: "Obsidian Apex", desc: "Balanced performance & logic" },
-            { id: "mistralai/Mistral-7B-Instruct-v0.1", name: "Mistral 7B", desc: "Instruction tuned model" },
-            { id: "meta-llama/Llama-2-7b-chat-hf", name: "Llama 2 7B", desc: "Meta's latest efficient model" },
-            { id: "microsoft/Phi-3-mini-4k-instruct", name: "Phi-3 Mini", desc: "Microsoft's compact powerhouse" },
-            { id: "google/flan-t5-large", name: "Flan T5 Large", desc: "Google's instruction-tuned model" },
-            { id: "tiiuae/falcon-7b-instruct", name: "Falcon 7B", desc: "TII's powerful instruct model" }
-        ];
-
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+        // Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyANPnto5M6Y9GBLX3akAbQ3UX4CAiVI3c8",
             authDomain: "tigrai.firebaseapp.com",
@@ -440,509 +395,257 @@ Already registered? <button class="text-primary font-bold hover:underline" oncli
             measurementId: "G-ZXB03SSX9S"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-        const googleProvider = new GoogleAuthProvider();
+        const GROQ_API_KEY = "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";
+        const GROQ_MODEL = "llama3-8b-8192";
 
-        let currentUserId = null;
-        let currentChatId = null;
-        let currentModel = HF_MODELS_CONFIG[0];
-        let attachedFiles = [];
-        let activeChatListener = null;
-        let isFirstMessage = true;
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
 
-        async function callAIModel(prompt, modelId) {
+        let currentUser = null;
+        let userData = {
+            messageCount: 0,
+            isPremium: false,
+            isAdmin: false
+        };
+
+        // UI Helpers
+        const switchTab = (tabId) => {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if(item.dataset.tab === tabId) {
+                    item.classList.add('active-tab');
+                    item.classList.remove('text-on-surface-variant', 'opacity-70');
+                } else {
+                    item.classList.remove('active-tab');
+                    item.classList.add('text-on-surface-variant', 'opacity-70');
+                }
+            });
+
+            document.querySelectorAll('[data-tab-mob]').forEach(item => {
+                if(item.dataset.tabMob === tabId) {
+                    item.classList.add('text-primary', 'bg-white/10');
+                    item.classList.remove('text-on-surface-variant/60');
+                } else {
+                    item.classList.remove('text-primary', 'bg-white/10');
+                    item.classList.add('text-on-surface-variant/60');
+                }
+            });
+        };
+
+        const updateUI = () => {
+            if (!currentUser) return;
+            
+            document.getElementById('user-display-name').textContent = currentUser.email.split('@')[0].toUpperCase();
+            document.getElementById('sub-status-label').textContent = userData.isPremium ? 'Pupkin+ Agent' : 'Standard Node';
+            
+            if (userData.isAdmin) {
+                document.getElementById('admin-nav-item').classList.remove('hidden');
+                document.getElementById('admin-nav-item-mob').classList.remove('hidden');
+            }
+
+            const limit = userData.isPremium ? 1000 : 10;
+            const perc = Math.min((userData.messageCount / limit) * 100, 100);
+            document.getElementById('usage-percent').textContent = `${Math.round(perc)}%`;
+            document.getElementById('usage-bar').style.width = `${perc}%`;
+        };
+
+        // Auth Logic
+        const handleAuth = async (type) => {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-password').value;
+            
+            if(!email || !pass) return alert("Credentials required");
+            
+            document.getElementById('auth-form').classList.add('hidden');
+            document.getElementById('auth-loading').classList.remove('hidden');
+            document.getElementById('loading-text').textContent = type === 'login' ? 'Authenticating...' : 'Provisioning Identity...';
+
             try {
-                const response = await fetch(
-                    `https://corsproxy.io/?https://api-inference.huggingface.co/models/${modelId}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${HUGGINGFACE_API_KEY}`,
-                            'Content-Type': 'application/json'
-                        },
-                        method: 'POST',
-                        body: JSON.stringify({
-                            inputs: prompt,
-                            parameters: {
-                                max_new_tokens: 300,
-                                temperature: 0.8,
-                                top_p: 0.95,
-                                do_sample: true,
-                                return_full_text: false,
-                                repetition_penalty: 1.1
-                            }
-                        })
+                if (type === 'signup') {
+                    await auth.createUserWithEmailAndPassword(email, pass);
+                } else {
+                    await auth.signInWithEmailAndPassword(email, pass);
+                }
+            } catch (error) {
+                console.error("Auth Error:", error);
+                alert(error.message);
+                document.getElementById('auth-form').classList.remove('hidden');
+                document.getElementById('auth-loading').classList.add('hidden');
+            }
+        };
+
+        const handleLogout = () => {
+            auth.signOut().then(() => location.reload());
+        };
+
+        // Database Listeners
+        auth.onAuthStateChanged(user => {
+            console.log("Auth State Changed:", user ? user.email : "Logged Out");
+            if (user) {
+                currentUser = user;
+                const userRef = db.ref(`users/${user.uid}`);
+                userRef.on('value', snapshot => {
+                    const data = snapshot.val();
+                    if (data) {
+                        userData = { ...userData, ...data };
+                        console.log("User Data Updated:", userData);
+                    } else {
+                        // Initialize first-time user data
+                        const initialData = {
+                            messageCount: 0,
+                            isPremium: emailIsAdmin(user.email), // Auto-premium for admin test accounts
+                            isAdmin: emailIsAdmin(user.email)
+                        };
+                        userRef.set(initialData);
+                        userData = initialData;
                     }
-                );
+                    updateUI();
+                    document.getElementById('auth-overlay').classList.add('hidden');
+                    document.getElementById('app-container').classList.remove('hidden');
+                }, error => {
+                    console.error("Database Subscription Error:", error);
+                });
+            } else {
+                document.getElementById('auth-overlay').classList.remove('hidden');
+                document.getElementById('app-container').classList.add('hidden');
+            }
+        });
+
+        const emailIsAdmin = (email) => email.toLowerCase().includes('admin');
+
+        // Chat Logic
+        const sendMessage = async () => {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            if(!userData.isPremium && userData.messageCount >= 10) {
+                alert("Quota exceeded (10/10). Please elevate to Pupkin+ for continued intelligence stream.");
+                switchTab('subscription');
+                return;
+            }
+
+            const chatLog = document.getElementById('chat-messages');
+            chatLog.innerHTML += `
+                <div class="flex gap-4 max-w-[80%] ml-auto justify-end">
+                    <div class="bg-primary text-background rounded-2xl rounded-tr-none p-4 text-body-sm font-medium">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            
+            input.value = '';
+            input.style.height = 'auto';
+            
+            const loadingId = 'msg-' + Date.now();
+            chatLog.innerHTML += `
+                <div id="${loadingId}" class="flex gap-4 max-w-[80%]">
+                    <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-sm animate-pulse">blur_on</span>
+                    </div>
+                    <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface italic">
+                        Accessing latent space...
+                    </div>
+                </div>
+            `;
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            try {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GROQ_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: GROQ_MODEL,
+                        messages: [
+                            { role: "system", content: "You are Pupkin, an elite digital intelligence. Be concise, futuristic, and helpful." },
+                            { role: "user", content: text }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1024
+                    })
+                });
 
                 if (!response.ok) {
-                    if (response.status === 503) {
-                        await new Promise(resolve => setTimeout(resolve, 5000));
-                        return callAIModel(prompt, modelId);
-                    }
-                    console.error(`API Error: ${response.status}`);
-                    return null;
+                    const errorData = await response.json();
+                    throw new Error(`Groq API Error: ${errorData.error?.message || response.statusText}`);
                 }
 
                 const data = await response.json();
+                const reply = data.choices[0].message.content;
                 
-                if (Array.isArray(data) && data.length > 0) {
-                    return data[0]?.generated_text || null;
-                } else if (data.generated_text) {
-                    return data.generated_text;
-                }
-                return null;
-            } catch (error) {
-                console.error('Error calling AI model:', error);
-                return null;
-            }
-        }
-
-        function switchView(view) {
-            const authView = document.getElementById('auth-view');
-            const chatView = document.getElementById('chat-view');
-            if (view === 'chat') {
-                authView.classList.replace('active-view', 'hidden-view');
-                chatView.classList.replace('hidden-view', 'active-view');
-            } else {
-                chatView.classList.replace('active-view', 'hidden-view');
-                authView.classList.replace('hidden-view', 'active-view');
-            }
-        }
-
-        window.toggleAuthForms = (view) => {
-            const login = document.getElementById('login-section');
-            const signup = document.getElementById('signup-section');
-            if (view === 'signup') {
-                login.classList.add('hidden-view');
-                signup.classList.remove('hidden-view');
-            } else {
-                signup.classList.remove('hidden-view');
-                login.classList.remove('hidden-view');
-            }
-        };
-
-        window.toggleSettingsModal = () => {
-            const modal = document.getElementById('settings-modal');
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                setTimeout(() => modal.classList.remove('opacity-0'), 10);
-            } else {
-                modal.classList.add('opacity-0');
-                setTimeout(() => modal.classList.add('hidden'), 300);
-            }
-        };
-
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            const html = document.documentElement;
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        if (localStorage.getItem('theme') === 'light') {
-            document.documentElement.classList.replace('dark', 'light');
-        }
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUserId = user.uid;
-                document.getElementById('user-display-name').textContent = user.displayName || user.email;
-                document.getElementById('user-avatar').textContent = (user.displayName || user.email).charAt(0).toUpperCase();
-                switchView('chat');
-                loadChatHistory();
-                if (!currentChatId) startNewChat();
-            } else {
-                currentUserId = null;
-                switchView('auth');
-            }
-        });
-
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-password').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch (err) { alert(err.message); }
-        });
-
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const pass = document.getElementById('signup-password').value;
-            try {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await updateProfile(cred.user, { displayName: name });
-            } catch (err) { alert(err.message); }
-        });
-
-        document.getElementById('google-signin').onclick = async () => {
-            try { await signInWithPopup(auth, googleProvider); } catch (err) { alert(err.message); }
-        };
-
-        document.getElementById('sign-out-btn').onclick = () => signOut(auth);
-
-        function initModelSwitcher() {
-            const container = document.getElementById('model-list-container');
-            container.innerHTML = '';
-            HF_MODELS_CONFIG.forEach(model => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left px-4 py-3 hover:bg-white/5 flex flex-col transition-colors group";
-                btn.onclick = () => {
-                    currentModel = model;
-                    document.getElementById('current-model-display').textContent = model.name;
-                    document.getElementById('model-dropdown').blur();
-                };
-                btn.innerHTML = `
-                    <span class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">${model.name}</span>
-                    <span class="text-[9px] text-on-surface-variant opacity-60">${model.desc}</span>
+                document.getElementById(loadingId).innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary text-sm">blur_on</span>
+                    </div>
+                    <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 text-body-sm text-on-surface">
+                        ${reply}
+                    </div>
                 `;
-                container.appendChild(btn);
-            });
-            document.getElementById('current-model-display').textContent = currentModel.name;
-        }
-        initModelSwitcher();
 
-        const attachBtn = document.getElementById('attach-btn');
-        const fileInput = document.getElementById('file-input');
-        const filePreviewContainer = document.getElementById('file-preview-container');
+                // Update message count in Firebase
+                userData.messageCount++;
+                db.ref(`users/${currentUser.uid}/messageCount`).set(userData.messageCount)
+                    .catch(e => console.error("Firebase Update Error:", e));
 
-        attachBtn.onclick = () => fileInput.click();
-
-        fileInput.onchange = (e) => {
-            const files = Array.from(e.target.files || []);
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const base64 = event.target.result;
-                    const fileObj = { name: file.name, type: file.type, data: base64 };
-                    attachedFiles.push(fileObj);
-                    renderFilePreviews();
-                };
-                reader.readAsDataURL(file);
-            });
-            fileInput.value = '';
-        };
-
-        function renderFilePreviews() {
-            filePreviewContainer.innerHTML = '';
-            if (attachedFiles.length > 0) {
-                filePreviewContainer.classList.remove('hidden');
-                attachedFiles.forEach((file, index) => {
-                    const div = document.createElement('div');
-                    div.className = "flex items-center gap-2 glass bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-[10px] animate-in fade-in zoom-in duration-200";
-                    div.innerHTML = `
-                        <span class="material-symbols-outlined text-sm">description</span>
-                        <span class="truncate max-w-[100px] font-mono">${file.name}</span>
-                        <button class="hover:text-primary text-on-surface-variant transition-colors" onclick="removeFile(${index})">
-                            <span class="material-symbols-outlined text-[14px]">close</span>
-                        </button>
-                    `;
-                    filePreviewContainer.appendChild(div);
-                });
-            } else {
-                filePreviewContainer.classList.add('hidden');
-            }
-        }
-
-        window.removeFile = (index) => {
-            attachedFiles.splice(index, 1);
-            renderFilePreviews();
-        };
-
-        const messageInput = document.getElementById('message-input');
-        const sendBtn = document.getElementById('send-btn');
-        const messagesContainer = document.getElementById('messages-container');
-        const welcomeState = document.getElementById('welcome-state');
-
-        function startNewChat() {
-            if (activeChatListener) {
-                off(activeChatListener);
-                activeChatListener = null;
-            }
-            
-            currentChatId = 'chat_' + Date.now();
-            isFirstMessage = true;
-            
-            messagesContainer.innerHTML = '';
-            const welcome = document.getElementById('welcome-state');
-            if (welcome) {
-                messagesContainer.appendChild(welcome);
-                welcome.style.display = 'block';
-            }
-            
-            attachedFiles = [];
-            renderFilePreviews();
-            listenToChat(currentChatId);
-        }
-
-        document.getElementById('new-chat-btn').onclick = startNewChat;
-
-        async function sendMessage() {
-            const text = messageInput.value.trim();
-            if ((!text && attachedFiles.length === 0) || !currentUserId) return;
-
-            if (!currentChatId) {
-                startNewChat();
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-
-            const chatId = currentChatId;
-            const chatRef = ref(db, `users/${currentUserId}/chats/${chatId}`);
-            const messagesRef = ref(db, `users/${currentUserId}/chats/${chatId}/messages`);
-            
-            const attachmentsData = attachedFiles.map(f => ({ name: f.name, type: f.type, data: f.data }));
-            const chatTitle = text ? (text.substring(0, 30) + (text.length > 30 ? '...' : '')) : "File Transfer";
-            
-            if (isFirstMessage) {
-                isFirstMessage = false;
-                const welcome = document.getElementById('welcome-state');
-                if (welcome) welcome.style.display = 'none';
-            }
-
-            await set(chatRef, { 
-                lastMessage: text || "Sent an attachment", 
-                timestamp: serverTimestamp(), 
-                title: chatTitle
-            });
-
-            const userMsg = {
-                sender: 'user',
-                text: text,
-                attachments: attachmentsData,
-                timestamp: serverTimestamp(),
-                model: currentModel.id
-            };
-            
-            await push(messagesRef, userMsg);
-
-            messageInput.value = '';
-            messageInput.style.height = 'auto';
-            attachedFiles = [];
-            renderFilePreviews();
-
-            try {
-                let aiResponse = await callAIModel(text, currentModel.id);
-                
-                if (!aiResponse) {
-                    const fallbackResponses = [
-                        `I've analyzed your input using the ${currentModel.name} model. How can I help further?`,
-                        `The Obsidian Core has processed your request with the ${currentModel.name} model. What's next?`,
-                        `Interesting query! The ${currentModel.name} model has generated some insights.`
-                    ];
-                    aiResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-                }
-                
-                if (aiResponse.startsWith(text)) {
-                    aiResponse = aiResponse.substring(text.length).trim();
-                }
-                
-                const aiMsg = {
-                    sender: 'ai',
-                    text: `Core Response [${currentModel.name}]: ${aiResponse}`,
-                    timestamp: serverTimestamp()
-                };
-                
-                await push(messagesRef, aiMsg);
-                
-            } catch (error) {
-                console.error('Error in AI processing:', error);
-                const aiMsg = {
-                    sender: 'ai',
-                    text: `Core Response [${currentModel.name}]: I'm having trouble connecting to the AI model. Please try again.`,
-                    timestamp: serverTimestamp()
-                };
-                await push(messagesRef, aiMsg);
-            }
-        }
-
-        sendBtn.onclick = sendMessage;
-        messageInput.addEventListener('keydown', (e) => { 
-            if(e.key === 'Enter' && !e.shiftKey) { 
-                e.preventDefault(); 
-                sendMessage(); 
-            } 
-        });
-
-        document.querySelectorAll('.sample-prompt').forEach(btn => {
-            btn.onclick = () => {
-                messageInput.value = btn.textContent;
-                messageInput.style.height = 'auto';
-                messageInput.style.height = messageInput.scrollHeight + 'px';
-            };
-        });
-
-        function listenToChat(chatId) {
-            if (activeChatListener) {
-                off(activeChatListener);
-                activeChatListener = null;
-            }
-            
-            const path = `users/${currentUserId}/chats/${chatId}/messages`;
-            const messagesRef = ref(db, path);
-            activeChatListener = messagesRef;
-            
-            onValue(messagesRef, (snapshot) => {
-                if (chatId !== currentChatId) return;
-                
-                const messages = [];
-                if (snapshot.exists()) {
-                    snapshot.forEach((child) => {
-                        messages.push({ id: child.key, ...child.val() });
-                    });
-                }
-                
-                if (messages.length === 0) {
-                    const welcome = document.getElementById('welcome-state');
-                    if (welcome) {
-                        messagesContainer.innerHTML = '';
-                        messagesContainer.appendChild(welcome);
-                        welcome.style.display = 'block';
-                    }
-                    isFirstMessage = true;
-                    return;
-                }
-                
-                messages.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-                
-                const currentMessages = messagesContainer.querySelectorAll('[data-msg-id]');
-                const currentIds = new Set();
-                currentMessages.forEach(el => currentIds.add(el.dataset.msgId));
-                
-                const welcome = document.getElementById('welcome-state');
-                if (welcome) welcome.style.display = 'none';
-                
-                messages.forEach(msg => {
-                    if (msg.id && !currentIds.has(msg.id)) {
-                        appendMessageUI(msg);
-                    }
-                });
-                
-                messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-            });
-        }
-
-        function appendMessageUI(msg) {
-            const isUser = msg.sender === 'user';
-            const wrapper = document.createElement('div');
-            wrapper.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300 mb-stack-md`;
-            wrapper.dataset.msgId = msg.id || 'temp_' + Date.now() + '_' + Math.random();
-            
-            const inner = document.createElement('div');
-            inner.className = `max-w-[85%] sm:max-w-[70%] glass p-4 ${isUser ? 'bg-surface-container-low chat-bubble-user border-white/5' : 'ai-glow chat-bubble-ai border-white/10'}`;
-            
-            if (!isUser) {
-                const header = document.createElement('div');
-                header.className = 'flex items-center gap-2 mb-2';
-                header.innerHTML = `
-                    <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Tigr Intelligence</span>
+            } catch (err) {
+                console.error("Chat Error:", err);
+                document.getElementById(loadingId).innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-error/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-error text-sm">error</span>
+                    </div>
+                    <div class="bg-error/10 border border-error/20 rounded-2xl rounded-tl-none p-4 text-body-sm text-error">
+                        Connection Fault: ${err.message}. Please verify your uplink.
+                    </div>
                 `;
-                inner.appendChild(header);
             }
-            
-            if (msg.text) {
-                const p = document.createElement('p');
-                p.className = 'font-body-md leading-relaxed whitespace-pre-wrap text-on-surface';
-                p.textContent = msg.text;
-                inner.appendChild(p);
-            }
+            chatLog.scrollTop = chatLog.scrollHeight;
+        };
 
-            if (msg.attachments && msg.attachments.length > 0) {
-                const attContainer = document.createElement('div');
-                attContainer.className = "mt-3 space-y-2";
-                msg.attachments.forEach(att => {
-                    const isImg = att.type && att.type.startsWith('image/');
-                    const div = document.createElement('div');
-                    div.className = "flex flex-col gap-2";
-                    if (isImg) {
-                        const img = document.createElement('img');
-                        img.src = att.data;
-                        img.className = "max-w-full rounded-lg border border-white/10 shadow-sm";
-                        img.alt = "attachment";
-                        div.appendChild(img);
-                    }
-                    const fileDiv = document.createElement('div');
-                    fileDiv.className = "flex items-center gap-2 bg-black/20 p-2 rounded text-[10px] opacity-70";
-                    fileDiv.innerHTML = `
-                        <span class="material-symbols-outlined text-sm">attachment</span>
-                        <span class="truncate">${att.name}</span>
-                    `;
-                    div.appendChild(fileDiv);
-                    attContainer.appendChild(div);
-                });
-                inner.appendChild(attContainer);
-            }
-            
-            wrapper.appendChild(inner);
-            messagesContainer.appendChild(wrapper);
-            messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
-        }
-
-        const historySearch = document.getElementById('history-search');
-        historySearch.oninput = (e) => loadChatHistory(e.target.value);
-
-        function loadChatHistory(filter = '') {
-            const historyRef = ref(db, `users/${currentUserId}/chats`);
-            onValue(historyRef, (snapshot) => {
-                const container = document.getElementById('history-container');
-                container.innerHTML = '';
-                const chats = [];
-                snapshot.forEach((child) => {
-                    chats.push({ id: child.key, ...child.val() });
-                });
-                chats.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-
-                const filteredChats = chats.filter(c => (c.title || '').toLowerCase().includes(filter.toLowerCase()));
-
-                filteredChats.forEach(chat => {
-                    const btn = document.createElement('button');
-                    btn.className = `w-[calc(100%-16px)] flex items-center gap-3 rounded-lg mx-2 px-4 py-3 font-label-md transition-all ${currentChatId === chat.id ? 'bg-white/5 text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'}`;
-                    btn.onclick = () => {
-                        if (currentChatId !== chat.id) {
-                            if (activeChatListener) {
-                                off(activeChatListener);
-                                activeChatListener = null;
-                            }
-                            currentChatId = chat.id;
-                            isFirstMessage = false;
-                            messagesContainer.innerHTML = '';
-                            listenToChat(chat.id);
-                            loadChatHistory(filter);
-                        }
-                        if (window.innerWidth < 1024) toggleDrawer();
-                    };
-                    btn.innerHTML = `<span class="material-symbols-outlined">history</span><span class="truncate text-left">${chat.title || 'Conversation'}</span>`;
-                    container.appendChild(btn);
-                });
-            });
-        }
-
-        window.toggleDrawer = () => {
-            const drawer = document.getElementById('side-drawer');
-            const overlay = document.getElementById('drawer-overlay');
-            const isOpen = !drawer.classList.contains('-translate-x-full');
-            if (isOpen) {
-                drawer.classList.add('-translate-x-full');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
+        const activateKey = () => {
+            const key = document.getElementById('activation-key').value.trim();
+            if(key.length > 8) {
+                db.ref(`users/${currentUser.uid}/isPremium`).set(true)
+                    .then(() => {
+                        alert("Crystal network synced. Pupkin+ capabilities active.");
+                        switchTab('chat');
+                    })
+                    .catch(e => alert("Sync Error: " + e.message));
             } else {
-                drawer.classList.remove('-translate-x-full');
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                alert("Invalid authentication key format.");
             }
         };
 
-        messageInput.oninput = function() {
+        const generateNewKey = () => {
+            const key = Array.from({length: 4}, () => Math.random().toString(36).substring(2, 6).toUpperCase()).join('-');
+            const list = document.getElementById('admin-keys-list');
+            list.innerHTML = `
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="p-4 font-label-mono text-primary">${key}</td>
+                    <td class="p-4 text-body-sm">Pupkin+</td>
+                    <td class="p-4"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-label-caps">ISSUED</span></td>
+                </tr>
+            ` + list.innerHTML;
+        };
+
+        // Textarea auto-resize
+        document.getElementById('chat-input').addEventListener('input', function() {
             this.style.height = 'auto';
-            const newHeight = Math.min(this.scrollHeight, 200);
-            this.style.height = newHeight + 'px';
-        };
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+        });
+
+        window.sendMessage = sendMessage;
+        window.handleAuth = handleAuth;
+        window.handleLogout = handleLogout;
+        window.switchTab = switchTab;
+        window.activateKey = activateKey;
+        window.generateNewKey = generateNewKey;
+
     </script>
 </body></html>
